@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1090057023206",
+    "project_id": "gotogether-1b01c",
+    "storage_bucket": "gotogether-1b01c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090057023206:android:30ddbcdd6dd505cd5a5527",
+        "android_client_info": {
+          "package_name": "com.example.go_together"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090057023206-scusb6b3jscd6g7r3qg0k2ncghdh2dr3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.go_together",
+            "certificate_hash": "c8bbf4a92d13d5a38c41ee3ef64483e7ce84d383"
+          }
+        },
+        {
+          "client_id": "1090057023206-ritmd78pj0jdkr1iq7ubjrecttaos3al.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS3lAxDuaJFeTL5w_VO2JsGrVxvGnmBrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090057023206-ritmd78pj0jdkr1iq7ubjrecttaos3al.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
