@@ -13,34 +13,102 @@ class Routes {
   static const main = '/MainPage';
   static const auth = '/AuthPage';
   Route? getRoute(RouteSettings settings) {
-  switch (settings.name) {
-    case Routes.login:
-      {
-        return MaterialPageRoute(
-            builder: (context) => const LoginPage(), settings: settings);
-      }
-    case Routes.register:
-      {
-        return MaterialPageRoute(
-            builder: (context) => const RegisterPage(), settings: settings);
-      }
-    // case Routes.forgot:
-    //   {
-    //     return MaterialPageRoute(
-    //         builder: (context) => const ForgotPassPage(), settings: settings);
-    //   }
-    case Routes.home:
-      {
-        return MaterialPageRoute(
-            builder: (context) => const HomePage(), settings: settings);
-      }
-    case Routes.main:
-      {
-        return MaterialPageRoute(
-            builder: (context) => const MainPage(), settings: settings);
-      }
+    switch (settings.name) {
+      case Routes.login:
+        {
+          return MaterialPageRoute(
+              builder: (context) => const LoginPage(), settings: settings);
+        }
+      case Routes.register:
+        {
+          return MaterialPageRoute(
+              builder: (context) => const RegisterPage(), settings: settings);
+        }
+      // case Routes.forgot:
+      //   {
+      //     return MaterialPageRoute(
+      //         builder: (context) => const ForgotPassPage(), settings: settings);
+      //   }
+      case Routes.home:
+        {
+          return MaterialPageRoute(
+              builder: (context) => const HomePage(), settings: settings);
+        }
+      case Routes.main:
+        {
+          return MaterialPageRoute(
+              builder: (context) => const MainPage(), settings: settings);
+        }
+    }
+    return null;
   }
-  return null;
 }
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget widget;
+  @override
+  final RouteSettings settings;
+
+  SlideRightRoute({
+    required this.widget,
+    required this.settings,
+  }) : super(
+          settings: settings,
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return widget;
+          },
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        );
 }
- 
+
+class SlideUpRoute extends PageRouteBuilder {
+  final Widget widget;
+  @override
+  final RouteSettings settings;
+
+  SlideUpRoute({
+    required this.widget,
+    required this.settings,
+  }) : super(
+          settings: settings,
+          transitionDuration: const Duration(milliseconds: 450),
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return widget;
+          },
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.0, 1.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        );
+}
