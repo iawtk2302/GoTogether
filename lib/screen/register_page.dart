@@ -4,7 +4,7 @@ import 'package:go_together/common/custom_color.dart';
 
 import '../repository/auth_repository.dart';
 import '../router/routes.dart';
-import '../widget/AuthButton.dart';
+import '../widget/auth_button.dart';
 
 import '../widget/custom_textfield.dart';
 

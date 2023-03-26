@@ -5,7 +5,7 @@ import 'package:go_together/screen/register_page.dart';
 import 'package:go_together/widget/custom_textfield.dart';
 
 import '../router/routes.dart';
-import '../widget/AuthButton.dart';
+import '../widget/auth_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -120,8 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: InkWell(
                         onTap: () {
-                          // Navigator.pushReplacementNamed(
-                          //     context, Routes.forgot);
+                          Navigator.pushNamed(
+                              context, Routes.forgot);
                         },
                         child: Text(
                           "Forgot the password?",

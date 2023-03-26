@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_together/screen/home_page.dart';
 
-import 'home_page.dart';
+import 'check_info.dart';
 import 'login_page.dart';
-import 'main_page.dart';
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -22,7 +22,7 @@ class _MainPageState extends State<MainPage> {
             return const Center(child: CircularProgressIndicator(),);
           }
           else if(snapshot.hasData){
-            return const HomePage();
+            return const CheckInfoPage();
           }
           else {
             return const LoginPage();

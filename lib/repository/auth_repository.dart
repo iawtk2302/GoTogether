@@ -34,6 +34,11 @@ class AuthRepository {
     }
   }
 
+  resetPassword(String email)async{
+    await FirebaseAuth.instance
+    .sendPasswordResetEmail(email: email);
+  }
+
   signOut() async {
     await FirebaseAuth.instance.signOut();
   }
