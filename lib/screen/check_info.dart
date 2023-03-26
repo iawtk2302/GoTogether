@@ -4,6 +4,10 @@ import 'package:go_together/bloc/user/user_bloc.dart';
 import 'package:go_together/repository/auth_repository.dart';
 import 'package:go_together/screen/fill_profile_page.dart';
 import 'package:go_together/screen/home_page.dart';
+import 'package:go_together/screen/profile_page.dart';
+
+import 'chat_page.dart';
+import 'favorite_page.dart';
 
 
 class CheckInfoPage extends StatefulWidget {
@@ -28,7 +32,7 @@ class _CheckInfoPageState extends State<CheckInfoPage> {
             return CircularProgressIndicator();
           }
           else if(state is UserExist){
-            return HomePage();
+            return MainPageContent();
           }
           else if(state is UserNotExist){
             return FillProfilePage();
@@ -39,6 +43,70 @@ class _CheckInfoPageState extends State<CheckInfoPage> {
          },
     
       ),
+    );
+  }
+}
+class MainPageContent extends StatefulWidget {
+  const MainPageContent({super.key});
+
+  @override
+  State<MainPageContent> createState() => _MainPageContentState();
+}
+
+class _MainPageContentState extends State<MainPageContent>
+    with SingleTickerProviderStateMixin {
+  int _selectedIndex = 0;
+  late TabController _tabController;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      _tabController.animateTo(index);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message_rounded),
+            label: 'Chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_sharp),
+            label: 'Favorite',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+      ),
+      body: DefaultTabController(
+          length: 4,
+          initialIndex: 0,
+          child: TabBarView(
+            controller: _tabController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage()],
+          )),
     );
   }
 }

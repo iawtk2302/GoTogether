@@ -48,7 +48,73 @@ class Routes {
             builder: (context) => const CheckInfoPage(), settings: settings);
       }
   }
-  return null;
+}}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget widget;
+  @override
+  final RouteSettings settings;
+
+  SlideRightRoute({
+    required this.widget,
+    required this.settings,
+  }) : super(
+          settings: settings,
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return widget;
+          },
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        );
 }
+
+class SlideUpRoute extends PageRouteBuilder {
+  final Widget widget;
+  @override
+  final RouteSettings settings;
+
+  SlideUpRoute({
+    required this.widget,
+    required this.settings,
+  }) : super(
+          settings: settings,
+          transitionDuration: const Duration(milliseconds: 450),
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return widget;
+          },
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.0, 1.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        );
 }
- 

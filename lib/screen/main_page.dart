@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_together/screen/home_page.dart';
 
 import 'check_info.dart';
 import 'login_page.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -27,7 +27,10 @@ class _MainPageState extends State<MainPage> {
           else {
             return const LoginPage();
           }
-      },),
+        },
+      ),
     );
   }
 }
+
+
