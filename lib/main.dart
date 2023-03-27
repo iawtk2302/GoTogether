@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_together/bloc/home/home_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
 import 'package:go_together/router/routes.dart';
 import 'package:go_together/screen/create_trip_page.dart';
@@ -8,22 +9,22 @@ import 'package:go_together/screen/fill_profile_page.dart';
 import 'package:go_together/screen/login_page.dart';
 import 'package:go_together/screen/main_page.dart';
 
-
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {   
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.   
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (_) => HomeBloc()..add(HomeLoadEvent()))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -52,7 +53,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];

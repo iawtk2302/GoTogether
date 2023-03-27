@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/router/routes.dart';
+import 'package:go_together/screen/item_trip.dart';
+
+import '../bloc/home/home_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -107,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Expanded(
                               child: TextField(
-                                cursorColor: Colors.green,
+                            cursorColor: Colors.green,
                             decoration: InputDecoration(
                               hintText: 'Search location',
                               hintStyle: TextStyle(fontSize: 12),
@@ -117,7 +121,6 @@ class _HomePageState extends State<HomePage> {
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Colors.green, width: 1)),
-                              
                             ),
                           )),
                         ],
@@ -132,129 +135,60 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.of(context).size.height - 210,
               width: double.infinity,
               // color: Colors.red,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 12),
-                  child: Column(children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Recommend for you',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
-                        ),
+              child: BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state is HomeLoading) {
+                    return const SizedBox();
+                  } else if (state is HomeLoaded) {
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 12),
+                        child: Column(children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Recommend for you',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                          ListView.separated(
+                              padding: EdgeInsets.zero,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) => ItemTrip(trip: state.trips[index]),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 12),
+                              itemCount: state.trips.length)
+                        ]),
                       ),
-                    ),
-                    ListView.separated(
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => itemRender(),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
-                        itemCount: 5)
-                  ]),
-                ),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
               ),
             ),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Colors.white,),
-        onPressed: (){
-        Navigator.pushNamed(context, Routes.createTrip);
-      }),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.createTrip);
+          }),
     );
   }
 }
 
-Widget itemRender() {
-  return InkWell(
-    borderRadius: BorderRadius.circular(12),
-    onTap: () {},
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 230,
-            width: double.infinity,
-            child: Stack(
-              children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: CachedNetworkImage(
-                        fit: BoxFit.fill,
-                        imageUrl:
-                            'https://6f3ebe2ff971707.cmccloud.com.vn/tour/wp-content/uploads/2022/03/202005171129SA19.jpeg',
-                      ),
-                    )),
-                Positioned(
-                  right: 10,
-                  top: 10,
-                  child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(20),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Quy Nhơn, Bình Định',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  children: const [Icon(Icons.star), Text('4.1')],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 2),
-            child: Text(
-              'Cách 1 km',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 2),
-            child: Text(
-              'Ngày 20 - 23 , Tháng 2',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+// Widget itemRender() {
+//   return ItemTrip();
+// }
+
