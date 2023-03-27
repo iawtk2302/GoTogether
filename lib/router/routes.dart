@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_together/screen/create_trip_page.dart';
 
 import '../screen/forgot_pass_page.dart';
 import '../screen/check_info.dart';
@@ -15,6 +16,7 @@ class Routes {
   static const main = '/MainPage';
   static const auth = '/AuthPage';
   static const checkInfo = '/CheckInfoPage';
+  static const createTrip = '/CreateTripPage';
   Route? getRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.login:
@@ -46,6 +48,11 @@ class Routes {
       {
         return MaterialPageRoute(
             builder: (context) => const CheckInfoPage(), settings: settings);
+      }
+      case Routes.createTrip:
+      {
+        return MaterialPageRoute(
+            builder: (context) => const CreateTripPage(), settings: settings);
       }
   }
 }}

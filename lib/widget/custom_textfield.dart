@@ -55,7 +55,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           Text(
             widget.title!,
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                 fontSize: 18, fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 10,
@@ -67,7 +67,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 minLines: widget.minLines??1,
                 maxLines: widget.maxLines??1,
                 controller: widget.textEditingController,
-                style: TextStyle(color: Colors.white),
+                // style: TextStyle(color: Colors.white),
                 obscureText: isHiddenPassword,
                 readOnly: readOnly,
                 maxLength: widget.maxLength,
@@ -78,7 +78,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     hintText: widget.hint,
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: CustomColor.grey),
                     enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
                           color: Color(0xFFBDC1C6), width: 2.0),

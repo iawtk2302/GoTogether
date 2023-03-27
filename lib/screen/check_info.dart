@@ -29,7 +29,7 @@ class _CheckInfoPageState extends State<CheckInfoPage> {
       body: BlocBuilder<UserBloc,UserState>(
         builder: (BuildContext context, state) { 
           if (state is UserLoading){
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
           else if(state is UserExist){
             return MainPageContent();

@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return !isLoading
         ? Scaffold(
-            backgroundColor: Colors.black,
+            backgroundColor: CustomColor.bg,
             body: Center(
               child: SingleChildScrollView(
                 child: Column(
@@ -44,47 +44,49 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         "Login To Your Account",
                         style: TextStyle(
-                            color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.w700),
                       ),
                     ),
                     Form(
                         key: _formKey,
-                        child: Column(
-                          children: [
-                            CustomTextFormField(
-                              hint: "Email",
-                              title: "Email",
-                              obscureText: false,
-                              textEditingController: _emailController,
-                              validate: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                        .hasMatch(value)) {
-                                  return "Invalid email";
-                                }
-                                return null;
-                              },
-                              textInputType: TextInputType.emailAddress,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomTextFormField(
-                              hint: "Password",
-                              title: "Password",
-                              obscureText: true,
-                              textEditingController: _passController,
-                              validate: (value) {
-                                if (value!.isEmpty || value.length < 8) {
-                                  return "Password at least 8 characters";
-                                }
-                              },
-                              textInputType: TextInputType.text,
-                            )
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            children: [
+                              CustomTextFormField(
+                                hint: "Email",
+                                title: "Email",
+                                obscureText: false,
+                                textEditingController: _emailController,
+                                validate: (value) {
+                                  if (value == null ||
+                                      value.isEmpty ||
+                                      !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          .hasMatch(value)) {
+                                    return "Invalid email";
+                                  }
+                                  return null;
+                                },
+                                textInputType: TextInputType.emailAddress,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomTextFormField(
+                                hint: "Password",
+                                title: "Password",
+                                obscureText: true,
+                                textEditingController: _passController,
+                                validate: (value) {
+                                  if (value!.isEmpty || value.length < 8) {
+                                    return "Password at least 8 characters";
+                                  }
+                                },
+                                textInputType: TextInputType.text,
+                              )
+                            ],
+                          ),
                         )),
                     SizedBox(
                       height: 20,
@@ -140,16 +142,16 @@ class _LoginPageState extends State<LoginPage> {
                           Container(
                             height: 1,
                             width: 80,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           const Text(
                             "Or continue with",
-                            style: TextStyle(color: Colors.white),
+                            
                           ),
                           Container(
                             height: 1,
                             width: 80,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ],
                       ),
@@ -182,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           const Text(
                             "Don't have an account? ",
-                            style: TextStyle(color: Colors.white),
+                         
                           ),
                           InkWell(
                             onTap: () {

@@ -47,7 +47,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
         elevation: 0,
         title: Text(
           "Fill Your Profile",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          style: TextStyle( fontWeight: FontWeight.w600),
         ),
       ),
       body: Container(
@@ -57,195 +57,195 @@ class _FillProfilePageState extends State<FillProfilePage> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 50,
-                        backgroundImage: _file == null
-                            ? const AssetImage("assets/images/emptyAvatar1.jpg")
-                            : Image.file(
-                                _file!,
-                                fit: BoxFit.cover,
-                              ).image,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          radius: 50,
+                          backgroundImage: _file == null
+                              ? const AssetImage("assets/images/emptyAvatar1.jpg")
+                              : Image.file(
+                                  _file!,
+                                  fit: BoxFit.cover,
+                                ).image,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                        right: 25,
-                        bottom: 30,
-                        child: InkWell(
-                          onTap: _editAvatar,
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            child: Center(
-                              child: Icon(Icons.edit,
-                                  color: Colors.white, size: 20),
+                      Positioned(
+                          right: 25,
+                          bottom: 30,
+                          child: InkWell(
+                            onTap: _editAvatar,
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              child: Center(
+                                child: Icon(Icons.edit,
+                                    color: Colors.white, size: 20),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(10)),
                             ),
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                        ))
-                  ],
-                ),
-                CustomTextFormField(
-                  hint: "Full Name",
-                  title: "Full Name",
-                  textEditingController: _fullNameController,
-                  validate: (value) {
-                    if (value!.isEmpty) {
-                      return "Required";
-                    }
-                    return null;
-                  },
-                ),
-                // InfoInput(
-                //   hintText: "First Name",
-                //   controller: _firstNameController,
-                //   readOnly: false,
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return "Required";
-                //     }
-                //     return null;
-                //   },
-                // ),
-                // InfoInput(
-                //   hintText: "Last Name",
-                //   controller: _lastNameController,
-                //   readOnly: false,
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return "Required";
-                //     }
-                //     return null;
-                //   },
-                // ),
-                
-                // InfoInput(
-                //   hintText: dateOfbirth,
-                //   suffixIcon: IconButton(
-                //     icon: const Icon(Icons.calendar_month),
-                //     onPressed: _getDateOfBirth,
-                //   ),
-                //   enabled: true,
-                //   readOnly: true,
-                // ),
-                CustomTextFormField(
-                  hint: "Email",
-                  title: "Email",
-                  textInputType: TextInputType.emailAddress,
-                  suffixIcon: const IconButton(
-                    icon: Icon(Icons.email),
-                    onPressed: null,
+                          ))
+                    ],
                   ),
-                  readOnly: false,
-                  textEditingController: _emailController,
-                  validate: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Required";
-                    }
-                    if (!RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value)) {
-                      return "Invalid email";
-                    }
-                    return null;
-                  },
-                ),
-                CustomTextFormField(
-                  hint: "Phone",
-                  title: "Phone",
-                  readOnly: false,
-                  suffixIcon: const IconButton(
-                    icon: Icon(Icons.phone),
-                    onPressed: null,
+                  CustomTextFormField(
+                    hint: "Full Name",
+                    title: "Full Name",
+                    textEditingController: _fullNameController,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return "Required";
+                      }
+                      return null;
+                    },
                   ),
-                  textInputType: TextInputType.phone,
-                  textEditingController: _phoneController,
-                  maxLength: 10,
-                  validate: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Required";
-                    }
-                    if (!RegExp(r"(84|0[3|5|7|8|9])+([0-9]{8})")
-                        .hasMatch(value)) {
-                      return "Invalid phone";
-                    }
-                    return null;
-                  },
-                ),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(vertical: 10),
-                //   child: Container(
-                //       width: size.width * 0.85,
-                //       decoration: BoxDecoration(
-                //           color: const Color(0xFFFAFAFA),
-                //           borderRadius: BorderRadius.circular(10)),
-                //       child: Padding(
-                //         padding: const EdgeInsets.symmetric(vertical: 2),
-                //         child: DropdownButtonHideUnderline(
-                //           child: DropdownButton<String>(
-                //             iconSize: 32,
-                //             icon: const Padding(
-                //               padding: EdgeInsets.only(right: 8),
-                //               child: Icon(Icons.keyboard_arrow_down),
-                //             ),
-                //             isExpanded: true,
-                //             onChanged: (value) {
-                //               setState(() {
-                //                 dropdownValue = value!;
-                //               });
-                //             },
-                //             value: dropdownValue,
-                //             items: gender
-                //                 .map<DropdownMenuItem<String>>((String value) {
-                //               return DropdownMenuItem<String>(
-                //                 value: value,
-                //                 child: Padding(
-                //                   padding: const EdgeInsets.only(left: 20),
-                //                   child: Text(value),
-                //                 ),
-                //               );
-                //             }).toList(),
-                //           ),
-                //         ),
-                //       )),
-                // ),
-                CustomTextFormField(
-                  title: "Date Of Birth",
-                  hint: dateOfbirth,
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.calendar_month),
-                    onPressed: _getDateOfBirth,
+                  // InfoInput(
+                  //   hintText: "First Name",
+                  //   controller: _firstNameController,
+                  //   readOnly: false,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return "Required";
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  // InfoInput(
+                  //   hintText: "Last Name",
+                  //   controller: _lastNameController,
+                  //   readOnly: false,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return "Required";
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  
+                  // InfoInput(
+                  //   hintText: dateOfbirth,
+                  //   suffixIcon: IconButton(
+                  //     icon: const Icon(Icons.calendar_month),
+                  //     onPressed: _getDateOfBirth,
+                  //   ),
+                  //   enabled: true,
+                  //   readOnly: true,
+                  // ),
+                  CustomTextFormField(
+                    hint: "Email",
+                    title: "Email",
+                    textInputType: TextInputType.emailAddress,
+                    suffixIcon: const IconButton(
+                      icon: Icon(Icons.email),
+                      onPressed: null,
+                    ),
+                    readOnly: false,
+                    textEditingController: _emailController,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Required";
+                      }
+                      if (!RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value)) {
+                        return "Invalid email";
+                      }
+                      return null;
+                    },
                   ),
-                  enabled: true,
-                  readOnly: true,
-                ),
-                GenderSelection(),
-                SizedBox(height: 10,),
-                CustomTextFormField(
-                  hint: "Address",
-                  title: "Address",
-                  textEditingController: _addressController,
-                  validate: (value) {
-                    if (value!.isEmpty) {
-                      return "Required";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: CustomButton(
+                  CustomTextFormField(
+                    hint: "Phone",
+                    title: "Phone",
+                    readOnly: false,
+                    suffixIcon: const IconButton(
+                      icon: Icon(Icons.phone),
+                      onPressed: null,
+                    ),
+                    textInputType: TextInputType.phone,
+                    textEditingController: _phoneController,
+                    maxLength: 10,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Required";
+                      }
+                      if (!RegExp(r"(84|0[3|5|7|8|9])+([0-9]{8})")
+                          .hasMatch(value)) {
+                        return "Invalid phone";
+                      }
+                      return null;
+                    },
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 10),
+                  //   child: Container(
+                  //       width: size.width * 0.85,
+                  //       decoration: BoxDecoration(
+                  //           color: const Color(0xFFFAFAFA),
+                  //           borderRadius: BorderRadius.circular(10)),
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.symmetric(vertical: 2),
+                  //         child: DropdownButtonHideUnderline(
+                  //           child: DropdownButton<String>(
+                  //             iconSize: 32,
+                  //             icon: const Padding(
+                  //               padding: EdgeInsets.only(right: 8),
+                  //               child: Icon(Icons.keyboard_arrow_down),
+                  //             ),
+                  //             isExpanded: true,
+                  //             onChanged: (value) {
+                  //               setState(() {
+                  //                 dropdownValue = value!;
+                  //               });
+                  //             },
+                  //             value: dropdownValue,
+                  //             items: gender
+                  //                 .map<DropdownMenuItem<String>>((String value) {
+                  //               return DropdownMenuItem<String>(
+                  //                 value: value,
+                  //                 child: Padding(
+                  //                   padding: const EdgeInsets.only(left: 20),
+                  //                   child: Text(value),
+                  //                 ),
+                  //               );
+                  //             }).toList(),
+                  //           ),
+                  //         ),
+                  //       )),
+                  // ),
+                  CustomTextFormField(
+                    title: "Date Of Birth",
+                    hint: dateOfbirth,
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.calendar_month),
+                      onPressed: _getDateOfBirth,
+                    ),
+                    enabled: true,
+                    readOnly: true,
+                  ),
+                  GenderSelection(),
+                  SizedBox(height: 10,),
+                  CustomTextFormField(
+                    hint: "Address",
+                    title: "Address",
+                    textEditingController: _addressController,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return "Required";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomButton(
                     text: "Next",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -253,11 +253,11 @@ class _FillProfilePageState extends State<FillProfilePage> {
                       }
                     },
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -388,51 +388,48 @@ class _FillProfilePageState extends State<FillProfilePage> {
     }
   }
   Widget GenderSelection(){
-    return Padding(
-      padding: const EdgeInsets.only(left: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Gender",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
-          SizedBox(height: 10,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Male",style: TextStyle(color: Colors.white,fontSize: 16)),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _selectedGender="Male";
-                  });
-                },
-                child: Icon(_selectedGender=="Male"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Male"?CustomColor.green:Colors.white ,),
-              ),
-              SizedBox(width: 20,),
-              Text("Female",style: TextStyle(color: Colors.white,fontSize: 16),),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _selectedGender="Female";
-                  });
-                },
-                child: Icon(_selectedGender=="Female"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Female"?CustomColor.green:Colors.white ,),
-              ),
-              SizedBox(width: 20,),
-              Text("Other",style: TextStyle(color: Colors.white,fontSize: 16),),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _selectedGender="Other";
-                  });
-                },
-                child: Icon(_selectedGender=="Other"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Other"?CustomColor.green:Colors.white ,),
-              ),
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Gender",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
+        SizedBox(height: 10,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Male",style: TextStyle(fontSize: 16)),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  _selectedGender="Male";
+                });
+              },
+              child: Icon(_selectedGender=="Male"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Male"?CustomColor.green:Colors.white ,),
+            ),
+            SizedBox(width: 20,),
+            Text("Female",style: TextStyle(fontSize: 16),),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  _selectedGender="Female";
+                });
+              },
+              child: Icon(_selectedGender=="Female"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Female"?CustomColor.green:Colors.white ,),
+            ),
+            SizedBox(width: 20,),
+            Text("Other",style: TextStyle(fontSize: 16),),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  _selectedGender="Other";
+                });
+              },
+              child: Icon(_selectedGender=="Other"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Other"?CustomColor.green:Colors.white ,),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -52,7 +52,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColor.bg,
-      body:isLoading?CircularProgressIndicator(): SafeArea(
+      body:isLoading?Center(child: CircularProgressIndicator()): SafeArea(
         child: SingleChildScrollView(child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -89,7 +89,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                                     'Select Destination',
                                     style: TextStyle(
                                       fontSize: 16,
-                                      color: Colors.white,
+                                      color: CustomColor.grey,
                                     ),
                         ),
                       ),
@@ -150,7 +150,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
             Text(
             "Date",
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                 fontSize: 18, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 5,),
             InkWell(
@@ -201,7 +201,7 @@ setState(() {
             Text(
             "Quantity",
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                 fontSize: 18, fontWeight: FontWeight.w600),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -213,13 +213,13 @@ setState(() {
                   quantity-=1;
                 }
                 });
-              }, icon: Icon(Icons.remove,color: Colors.white)),
+              }, icon: Icon(Icons.remove,color: Colors.black)),
               Text(quantity.toString()),
               IconButton(onPressed: () {
                 setState(() {
                   quantity+=1;
                 });
-              }, icon: Icon(Icons.add,color: Colors.white,))
+              }, icon: Icon(Icons.add,color: Colors.black,))
             ],),
             CustomTextFormField(
               textEditingController: _descriptionController,
@@ -283,9 +283,9 @@ void _chooseImage() {
                   ),
                   const Text(
                     "Upload Photo",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600,color: Colors.white),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600,),
                   ),
-                  const Text("Choose Your Trip Picture",style: TextStyle(color: Colors.white),),
+                  const Text("Choose Your Trip Picture",style: TextStyle(),),
                   const SizedBox(
                     height: 20,
                   ),
@@ -326,5 +326,6 @@ void _chooseImage() {
         "image":linkImage
       });
     });
+    Navigator.pop(context);
   }
 }
