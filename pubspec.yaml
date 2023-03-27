@@ -39,6 +39,15 @@ dependencies:
   firebase_auth: ^4.2.10
   google_sign_in: ^6.0.2
   flutter_facebook_auth: ^5.0.7
+  equatable: ^2.0.5
+  image_picker: ^0.8.7
+  cloud_firestore: ^4.4.5
+  firebase_storage: ^11.0.16
+  flutter_bloc: ^8.1.2
+  calendar_date_picker2: ^0.4.9
+  intl: ^0.17.0
+  dropdown_button2: ^2.0.0
+  http: ^0.13.5
   cached_network_image: ^3.2.3
 
 dev_dependencies:

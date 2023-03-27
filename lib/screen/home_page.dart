@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_together/router/routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -162,6 +163,11 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add, color: Colors.white,),
+        onPressed: (){
+        Navigator.pushNamed(context, Routes.createTrip);
+      }),
     );
   }
 }
