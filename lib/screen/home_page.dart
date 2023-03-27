@@ -106,6 +106,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Expanded(
                               child: TextField(
+                                cursorColor: Colors.green,
                             decoration: InputDecoration(
                               hintText: 'Search location',
                               hintStyle: TextStyle(fontSize: 12),
@@ -115,6 +116,7 @@ class _HomePageState extends State<HomePage> {
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Colors.green, width: 1)),
+                              
                             ),
                           )),
                         ],
