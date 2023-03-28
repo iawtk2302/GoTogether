@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         title: 'Go Together',
         onGenerateRoute: (settings) => Routes().getRoute(settings),
         theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFADE792)),
+          primarySwatch: createMaterialColor(Colors.green),
           // textTheme: ThemeData.light().textTheme.copyWith(
           //       bodyText1: TextStyle(color: Colors.white),
           //       bodyText2: TextStyle(color: Colors.white),

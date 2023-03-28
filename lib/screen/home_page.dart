@@ -5,6 +5,7 @@ import 'package:go_together/router/routes.dart';
 import 'package:go_together/screen/item_trip.dart';
 
 import '../bloc/home/home_bloc.dart';
+import '../bloc/user/user_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -61,14 +62,27 @@ class _HomePageState extends State<HomePage> {
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 8.0, right: 4, top: 4, bottom: 4),
-                        child: Row(children: const [
-                          Icon(Icons.menu, color: Colors.white),
-                          SizedBox(
+                        child: Row(children: [
+                          const Icon(Icons.menu, color: Colors.white),
+                          const SizedBox(
                             width: 16,
                           ),
-                          CircleAvatar(
-                            backgroundImage: CachedNetworkImageProvider(
-                                'https://firebasestorage.googleapis.com/v0/b/sneakerapp-f4de5.appspot.com/o/RWN1mUAm9FXdowlsgKbZqU25zt23.jpg?alt=media&token=0df163e4-3a98-4371-90a7-52ec17c26320'),
+                          BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) {
+                              if (state is UserLoading) {
+                                return CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      'https://firebasestorage.googleapis.com/v0/b/sneakerapp-f4de5.appspot.com/o/RWN1mUAm9FXdowlsgKbZqU25zt23.jpg?alt=media&token=0df163e4-3a98-4371-90a7-52ec17c26320'),
+                                );
+                              } else if (state is UserExist) {
+                                return CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      state.user.image.toString()),
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
                           )
                         ]),
                       ),
@@ -160,7 +174,8 @@ class _HomePageState extends State<HomePage> {
                               padding: EdgeInsets.zero,
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemBuilder: (context, index) => ItemTrip(trip: state.trips[index]),
+                              itemBuilder: (context, index) =>
+                                  ItemTrip(trip: state.trips[index]),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(height: 12),
                               itemCount: state.trips.length)
