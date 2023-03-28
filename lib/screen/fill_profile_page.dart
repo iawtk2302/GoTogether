@@ -292,9 +292,9 @@ class _FillProfilePageState extends State<FillProfilePage> {
                   ),
                   const Text(
                     "Upload Photo",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600,color: Colors.white),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                   ),
-                  const Text("Choose Your Profile Picture",style: TextStyle(color: Colors.white),),
+                  const Text("Choose Your Profile Picture",),
                   const SizedBox(
                     height: 20,
                   ),
@@ -405,7 +405,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                   _selectedGender="Male";
                 });
               },
-              child: Icon(_selectedGender=="Male"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Male"?CustomColor.green:Colors.white ,),
+              child: Icon(_selectedGender=="Male"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Male"?CustomColor.green:CustomColor.grey ,),
             ),
             SizedBox(width: 20,),
             Text("Female",style: TextStyle(fontSize: 16),),
@@ -415,7 +415,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                   _selectedGender="Female";
                 });
               },
-              child: Icon(_selectedGender=="Female"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Female"?CustomColor.green:Colors.white ,),
+              child: Icon(_selectedGender=="Female"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Female"?CustomColor.green:CustomColor.grey ,),
             ),
             SizedBox(width: 20,),
             Text("Other",style: TextStyle(fontSize: 16),),
@@ -425,7 +425,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                   _selectedGender="Other";
                 });
               },
-              child: Icon(_selectedGender=="Other"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Other"?CustomColor.green:Colors.white ,),
+              child: Icon(_selectedGender=="Other"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Other"?CustomColor.green:CustomColor.grey ,),
             ),
           ],
         ),

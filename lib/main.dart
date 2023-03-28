@@ -8,6 +8,8 @@ import 'package:go_together/screen/fill_profile_page.dart';
 import 'package:go_together/screen/login_page.dart';
 import 'package:go_together/screen/main_page.dart';
 
+import 'bloc/chat/chat_bloc.dart';
+
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (context) => ChatBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
