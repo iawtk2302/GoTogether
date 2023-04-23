@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/home/home_bloc.dart';
+import 'package:go_together/bloc/manage_trip/manage_trip_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
 import 'package:go_together/router/routes.dart';
 import 'package:go_together/screen/main_page.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (_) => HomeBloc()..add(HomeLoadEvent())),
         BlocProvider(create: (context) => ChatBloc()),
-        BlocProvider(create: (context) => MapSupportBloc())
+        BlocProvider(create: (context) => MapSupportBloc()),
+        BlocProvider(create: (context) => ManageTripBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

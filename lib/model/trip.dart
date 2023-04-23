@@ -13,6 +13,7 @@ class Trip extends Equatable {
     required this.image,
     required this.members,
     required this.activities,
+    required this.membersId,
   });
 
   final String destination;
@@ -25,6 +26,7 @@ class Trip extends Equatable {
   final String image;
   final List<Member> members;
   final List<String> activities;
+  final List<String> membersId;
 
   Trip copyWith({
     String? destination,
@@ -37,19 +39,20 @@ class Trip extends Equatable {
     String? image,
     List<Member>? members,
     List<String>? activities,
+    List<String>? membersId,
   }) =>
       Trip(
-        destination: destination ?? this.destination,
-        title: title ?? this.title,
-        dateStart: dateStart ?? this.dateStart,
-        dateEnd: dateEnd ?? this.dateEnd,
-        quantity: quantity ?? this.quantity,
-        description: description ?? this.description,
-        isActive: isActive ?? this.isActive,
-        image: image ?? this.image,
-        members: members ?? this.members,
-        activities: activities ?? this.activities,
-      );
+          destination: destination ?? this.destination,
+          title: title ?? this.title,
+          dateStart: dateStart ?? this.dateStart,
+          dateEnd: dateEnd ?? this.dateEnd,
+          quantity: quantity ?? this.quantity,
+          description: description ?? this.description,
+          isActive: isActive ?? this.isActive,
+          image: image ?? this.image,
+          members: members ?? this.members,
+          activities: activities ?? this.activities,
+          membersId: membersId ?? this.membersId);
 
   factory Trip.fromJson(Map<String, dynamic> json) => Trip(
         destination: json["destination"],
@@ -66,6 +69,9 @@ class Trip extends Equatable {
         activities: json["activities"] == null
             ? []
             : List<String>.from(json["activities"].map((x) => x)),
+        membersId: json['membersId'] == null
+            ? []
+            : List<String>.from(json["membersId"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,6 +85,7 @@ class Trip extends Equatable {
         "image": image,
         "members": List<dynamic>.from(members.map((x) => x.toJson())),
         "activities": List<dynamic>.from(activities.map((x) => x)),
+        "membersId": List<dynamic>.from(activities.map((x) => x)),
       };
 
   @override
@@ -93,6 +100,7 @@ class Trip extends Equatable {
         image,
         members,
         activities,
+        membersId,
       ];
 }
 
@@ -123,10 +131,10 @@ class Member extends Equatable {
       );
 
   factory Member.fromJson(Map<String, dynamic> json) => Member(
-        idUser: json["idUser"],
-        image: json["image"],
-        lat: json["lat"],
-        lng: json["lng"],
+        idUser: json["idUser"] ?? "",
+        image: json["image"] ?? "",
+        lat: json["lat"] ?? "",
+        lng: json["lng"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

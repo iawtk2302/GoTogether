@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                       const Padding(
                         padding: EdgeInsets.only(top: 8.0, left: 12),
                         child: Text(
-                          'Where did you go?',
+                          'Bạn muốn đi đâu?',
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.w600),
                         ),
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                               child: TextField(
                             cursorColor: Colors.green,
                             decoration: InputDecoration(
-                              hintText: 'Search location',
+                              hintText: 'Tìm kiếm',
                               hintStyle: TextStyle(fontSize: 12),
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                'Recommend for you',
+                                'Đề xuất cho bạn',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 18),
                               ),
