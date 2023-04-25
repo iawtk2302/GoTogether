@@ -3,65 +3,74 @@ import 'package:equatable/equatable.dart';
 
 class Trip extends Equatable {
   Trip({
+    required this.idTrip,
+    required this.idCreator,
     required this.destination,
     required this.title,
     required this.dateStart,
     required this.dateEnd,
     required this.quantity,
     required this.description,
-    required this.isActive,
+    required this.status,
     required this.image,
     required this.members,
     required this.activities,
     required this.membersId,
   });
-
+  final String idTrip;
+  final String idCreator;
   final String destination;
   final String title;
   final Timestamp dateStart;
   final Timestamp dateEnd;
   final int quantity;
   final String description;
-  final bool isActive;
+  final String status;
   final String image;
   final List<Member> members;
   final List<String> activities;
   final List<String> membersId;
 
   Trip copyWith({
+    String? idTrip,
+    String? idCreator,
     String? destination,
     String? title,
     Timestamp? dateStart,
     Timestamp? dateEnd,
     int? quantity,
     String? description,
-    bool? isActive,
+    String? status,
     String? image,
     List<Member>? members,
     List<String>? activities,
     List<String>? membersId,
   }) =>
       Trip(
+          idTrip: idTrip ?? this.idTrip,
+          idCreator: idCreator ?? this.idCreator,
           destination: destination ?? this.destination,
           title: title ?? this.title,
           dateStart: dateStart ?? this.dateStart,
           dateEnd: dateEnd ?? this.dateEnd,
           quantity: quantity ?? this.quantity,
           description: description ?? this.description,
-          isActive: isActive ?? this.isActive,
+          status: status ?? this.status,
           image: image ?? this.image,
           members: members ?? this.members,
           activities: activities ?? this.activities,
           membersId: membersId ?? this.membersId);
 
   factory Trip.fromJson(Map<String, dynamic> json) => Trip(
+        idTrip: json["idTrip"] ?? "",
+        idCreator: json["idCreator"] ?? "",
         destination: json["destination"],
         title: json["title"],
         dateStart: json["dateStart"],
         dateEnd: json["dateEnd"],
         quantity: json["quantity"],
         description: json["description"],
-        isActive: json["isActive"],
+        status: json["status"],
         image: json["image"],
         members: json["members"] == null
             ? []
@@ -81,11 +90,13 @@ class Trip extends Equatable {
         "dateEnd": dateEnd,
         "quantity": quantity,
         "description": description,
-        "isActive": isActive,
+        "status": status,
         "image": image,
         "members": List<dynamic>.from(members.map((x) => x.toJson())),
         "activities": List<dynamic>.from(activities.map((x) => x)),
-        "membersId": List<dynamic>.from(activities.map((x) => x)),
+        "membersId": List<dynamic>.from(membersId.map((x) => x)),
+        "idCreator": idCreator,
+        "idTrip": idTrip,
       };
 
   @override
@@ -96,11 +107,14 @@ class Trip extends Equatable {
         dateEnd,
         quantity,
         description,
-        isActive,
+        status,
         image,
         members,
         activities,
         membersId,
+        idCreator,
+        idTrip,
+        membersId
       ];
 }
 

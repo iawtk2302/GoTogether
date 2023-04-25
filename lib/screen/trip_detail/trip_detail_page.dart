@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:go_together/common/custom_color.dart';
+import 'package:go_together/model/custom_user.dart';
 import 'package:go_together/model/trip.dart';
 import 'package:go_together/utils/date_time_utils.dart';
 import 'package:go_together/widget/custom_button.dart';
@@ -68,10 +70,10 @@ class TripDetailPage extends StatelessWidget {
               const SizedBox(height: 26),
               const CustomMediumDivider(),
               const SizedBox(height: 8),
-              _buildDescription(),
-              const SizedBox(height: 26),
-              const CustomMediumDivider(),
-              const SizedBox(height: 8),
+              // _buildDescription(),
+              // const SizedBox(height: 26),
+              // const CustomMediumDivider(),
+              // const SizedBox(height: 8),
               _buildActivities(),
               const SizedBox(height: 26),
               const CustomMediumDivider(),
@@ -252,14 +254,30 @@ class TripDetailPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'Cat Tai, Phu Cat, Binh Dinh',
+                trip.description,
               )
             ],
           ),
-          CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-                'https://firebasestorage.googleapis.com/v0/b/gotogether-1b01c.appspot.com/o/2Q8nqe3yHjj1YKsperyB.jpg?alt=media&token=c071b178-6426-44e0-9d8d-4a21332eeb53'),
-          )
+          FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('User')
+                  .doc(trip.idCreator)
+                  .get(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const SizedBox();
+                }
+                CustomUser? user;
+                if (snapshot.data != null) {
+                  user = CustomUser.fromJson(snapshot.data!.data()!);
+                }
+
+                return CircleAvatar(
+                  radius: 25,
+                  backgroundImage: CachedNetworkImageProvider(
+                      user == null ? '' : user.image ?? ""),
+                );
+              })
         ],
       ),
     );
