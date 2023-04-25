@@ -10,6 +10,7 @@ import 'package:go_together/model/custom_user.dart';
 import 'package:go_together/model/trip.dart';
 import 'package:go_together/utils/date_time_utils.dart';
 import 'package:go_together/utils/firebase_utils.dart';
+import 'package:go_together/utils/toasty.dart';
 import 'package:go_together/widget/custom_button.dart';
 import 'package:go_together/widget/custom_medium_divider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -27,6 +28,20 @@ class TripDetailPage extends StatelessWidget {
     target: LatLng(10.874327, 106.7992051),
     zoom: 14.4746,
   );
+  final activities = {
+    "Bơi": "🏊‍♀️",
+    "Cắm trại": "🏕️",
+    'Leo núi': "🧗",
+    "Quay phim": "🎥",
+    "Chụp ảnh": "📷",
+    "Câu cá": "🪝",
+    "Nhảy dù": "🪂",
+    "Nấu ăn": "🍚",
+    "Lặn": "🤿",
+    "Tình nguyện": "🫶",
+    "Lễ hội âm nhạc": "🎶",
+    "Trải nghiệm văn hóa địa phương": "🏘️",
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -73,15 +88,15 @@ class TripDetailPage extends StatelessWidget {
               const SizedBox(height: 26),
               const CustomMediumDivider(),
               const SizedBox(height: 8),
-              // _buildDescription(),
-              // const SizedBox(height: 26),
-              // const CustomMediumDivider(),
-              // const SizedBox(height: 8),
+              _buildDescription(),
+              const SizedBox(height: 26),
+              const CustomMediumDivider(),
+              const SizedBox(height: 8),
               _buildActivities(),
               const SizedBox(height: 26),
               const CustomMediumDivider(),
               _buildMap(),
-              const SizedBox(height: 32),
+              const SizedBox(height: 26),
               const CustomMediumDivider(),
               Image.asset(
                 'assets/images/qr_test.png',
@@ -92,7 +107,8 @@ class TripDetailPage extends StatelessWidget {
               ),
             ]),
           ),
-          _buildButtonRequest()
+          if (FirebaseUtil.currentUser!.uid != trip.idCreator)
+            _buildButtonRequest()
         ],
       ),
     );
@@ -109,41 +125,41 @@ class TripDetailPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
             child: CustomButton(
-                onPressed: () async {
-                  MyNotification notification = MyNotification(
-                      idNoti: '',
-                      idReceiver: trip.idCreator,
-                      idSender: FirebaseUtil.currentUser!.uid,
-                      idTrip: trip.idTrip,
-                      fullName: FirebaseUtil.currentUser!.displayName ?? "",
-                      imgAva: FirebaseUtil.currentUser!.photoURL ?? "",
-                      title: trip.title,
-                      type: 'tripRequest',
-                      status: 'pending');
+              onPressed: () async {
+                MyNotification notification = MyNotification(
+                    idNoti: '',
+                    idReceiver: trip.idCreator,
+                    idSender: FirebaseUtil.currentUser!.uid,
+                    idTrip: trip.idTrip,
+                    fullName: FirebaseUtil.currentUser!.displayName ?? "",
+                    imgAva: FirebaseUtil.currentUser!.photoURL ?? "",
+                    title: trip.title,
+                    type: 'tripRequest',
+                    status: 'pending');
 
-                  final count = await FirebaseFirestore.instance
+                final count = await FirebaseFirestore.instance
+                    .collection('Notification')
+                    .where("idSender", isEqualTo: FirebaseUtil.currentUser!.uid)
+                    .where("idTrip", isEqualTo: trip.idTrip)
+                    .get();
+
+                if (count.docs.isEmpty) {
+                  await FirebaseFirestore.instance
                       .collection('Notification')
-                      .where("idSender",
-                          isEqualTo: FirebaseUtil.currentUser!.uid)
-                      .where("idTrip", isEqualTo: trip.idTrip)
-                      .get();
-
-                  if (count.docs.isEmpty) {
+                      .add(notification.toJson())
+                      .then((value) async {
                     await FirebaseFirestore.instance
                         .collection('Notification')
-                        .add(notification.toJson())
-                        .then((value) async {
-                      await FirebaseFirestore.instance
-                          .collection('Notification')
-                          .doc(value.id)
-                          .update({"idNoti": value.id});
-                    });
-                  }
-                  else {
-                    
-                  }
-                },
-                text: 'Yêu cầu tham gia'),
+                        .doc(value.id)
+                        .update({"idNoti": value.id});
+                  });
+                } else {
+                  Toasty.show('Bạn đã yêu cầu tham gia rồi',
+                      type: ToastType.warning);
+                }
+              },
+              text: 'Yêu cầu tham gia',
+            ),
           ),
         ));
   }
@@ -165,14 +181,18 @@ class TripDetailPage extends StatelessWidget {
             // markers: markers,
           ),
         ),
-        Text(trip.description),
+        const SizedBox(height: 6),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(trip.destination),
+        ),
       ],
     );
   }
 
   Widget _buildActivities() {
     return SizedBox(
-      height: 120,
+      height: trip.activities.length < 3 ? 100 : 200,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
@@ -186,6 +206,7 @@ class TripDetailPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
               ),
             ),
+            const SizedBox(height: 6),
             Expanded(
               child: Center(
                 child: trip.activities.isEmpty
@@ -193,38 +214,103 @@ class TripDetailPage extends StatelessWidget {
                         'Không có hoạt động nào',
                         style: TextStyle(color: Colors.black),
                       )
-                    : ListView.builder(
-                        padding: const EdgeInsets.only(top: 8),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: trip.activities.length ~/ 3,
-                        itemBuilder: (context, index) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              _buttonActivity(trip.activities[index * 3]),
-                              _buttonActivity(trip.activities[index * 3 + 1]),
-                              _buttonActivity(trip.activities[index * 3 + 2])
-                            ]),
-                      ),
+                    : Wrap(
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        children: List.generate(
+                          trip.activities.length,
+                          (index) => _buttonActivity(trip.activities[index],
+                              activities[trip.activities[index]], index),
+                        )),
               ),
             )
-            // const SizedBox(
-            //   height: 8,
-            // ),
-
-            // const SizedBox(
-            //   height: 12,
-            // ),
-            // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            //   _buttonActivity(),
-            //   _buttonActivity(),
-            //   _buttonActivity()
-            // ]),
           ],
         ),
       ),
     );
   }
+
+  Widget _buttonActivity(text, icon, index) {
+    return Wrap(children: [
+      Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: InkWell(
+          onTap: () {},
+          child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  color: CustomColor.buttonActivityBgColor.withOpacity(.5),
+                  border: Border.all(color: CustomColor.blue)),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Wrap(
+                children: [
+                  Text(icon),
+                  Text(' ${text}'),
+                ],
+              )),
+        ),
+      ),
+      SizedBox(
+        width: 6,
+      ),
+    ]);
+  }
+
+  // Widget _buildActivities() {
+  //   return SizedBox(
+  //     height: 120,
+  //     child: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           const Align(
+  //             alignment: Alignment.topLeft,
+  //             child: Text(
+  //               'Hoạt động',
+  //               textAlign: TextAlign.left,
+  //               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+  //             ),
+  //           ),
+  //           Expanded(
+  //             child: Center(
+  //               child: trip.activities.isEmpty
+  //                   ? const Text(
+  //                       'Không có hoạt động nào',
+  //                       style: TextStyle(color: Colors.black),
+  //                     )
+  //                   : ListView.builder(
+  //                       padding: const EdgeInsets.only(top: 8),
+  //                       shrinkWrap: true,
+  //                       physics: const NeverScrollableScrollPhysics(),
+  //                       itemCount: trip.activities.length ~/ 3,
+  //                       itemBuilder: (context, index) => Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                           children: [
+  //                             _buttonActivity(trip.activities[index * 3]),
+  //                             _buttonActivity(trip.activities[index * 3 + 1]),
+  //                             _buttonActivity(trip.activities[index * 3 + 2])
+  //                           ]),
+  //                     ),
+  //             ),
+  //           )
+  //           // const SizedBox(
+  //           //   height: 8,
+  //           // ),
+
+  //           // const SizedBox(
+  //           //   height: 12,
+  //           // ),
+  //           // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+  //           //   _buttonActivity(),
+  //           //   _buttonActivity(),
+  //           //   _buttonActivity()
+  //           // ]),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildDescription() {
     return Padding(
@@ -286,7 +372,7 @@ class TripDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                trip.destination,
+                trip.title,
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
@@ -321,21 +407,21 @@ class TripDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buttonActivity(text) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: InkWell(
-        onTap: () {},
-        child: Ink(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: CustomColor.buttonActivityBgColor.withOpacity(.5),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-            child: Text(text)),
-      ),
-    );
-  }
+  // Widget _buttonActivity(text) {
+  //   return ClipRRect(
+  //     borderRadius: BorderRadius.circular(8),
+  //     child: InkWell(
+  //       onTap: () {},
+  //       child: Ink(
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(8),
+  //             color: CustomColor.buttonActivityBgColor.withOpacity(.5),
+  //           ),
+  //           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+  //           child: Text(text)),
+  //     ),
+  //   );
+  // }
 
   Widget _customDateQuantity(String title, String value) {
     return Column(

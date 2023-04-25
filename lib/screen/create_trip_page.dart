@@ -25,6 +25,20 @@ class CreateTripPage extends StatefulWidget {
 }
 
 class _CreateTripPageState extends State<CreateTripPage> {
+  final activities = {
+    "Bơi": "🏊‍♀️",
+    "Cắm trại": "🏕️",
+    'Leo núi': "🧗",
+    "Quay phim": "🎥",
+    "Chụp ảnh": "📷",
+    "Câu cá": "🪝",
+    "Nhảy dù": "🪂",
+    "Nấu ăn": "🍚",
+    "Lặn": "🤿",
+    "Tình nguyện": "🫶",
+    "Lễ hội âm nhạc": "🎶",
+    "Trải nghiệm văn hóa địa phương": "🏘️",
+  };
   List<DateTime?> _dates = [];
   File? _file;
   int quantity = 1;
@@ -35,17 +49,17 @@ class _CreateTripPageState extends State<CreateTripPage> {
   bool isLoading = true;
   List<String> items = [];
   String? selectedValue;
-  void clear(){
-    quantity=1;
+  List<int> activitiesChoose = [];
+  void clear() {
+    quantity = 1;
     _dates.clear();
-    _file=null;
+    _file = null;
     _titleController.clear();
     _descriptionController.clear();
-    selectedValue=null;
-    setState(() {
-      
-    });
+    selectedValue = null;
+    setState(() {});
   }
+
   Future<void> getProvince() async {
     // List<String> temp=[];
     final encoding = Encoding.getByName('utf-8');
@@ -389,6 +403,10 @@ class _CreateTripPageState extends State<CreateTripPage> {
                     SizedBox(
                       height: 20,
                     ),
+                    _buildActivities(),
+                    SizedBox(
+                      height: 20,
+                    ),
                     CustomTextFormField(
                       textEditingController: _descriptionController,
                       height: 130,
@@ -489,35 +507,39 @@ class _CreateTripPageState extends State<CreateTripPage> {
       },
     );
   }
+
   Future<bool> isTripDateValid(Timestamp startDate, Timestamp endDate) async {
-  final trips=FirebaseUtil.trips;
+    final trips = FirebaseUtil.trips;
 
-  // Query documents where 'dateStart' is less than or equal to the endDate of the new trip
-  final query1 = trips.where('dateStart', isLessThan: endDate);
+    // Query documents where 'dateStart' is less than or equal to the endDate of the new trip
+    final query1 = trips.where('dateStart', isLessThan: endDate);
 
-  // Query documents where 'dateEnd' is greater than or equal to the startDate of the new trip
-  final query2 = trips.where('dateEnd', isGreaterThan: startDate);
+    // Query documents where 'dateEnd' is greater than or equal to the startDate of the new trip
+    final query2 = trips.where('dateEnd', isGreaterThan: startDate);
 
-  // Get the results of both queries
-  final snapshot1 = await query1.get();
-  final snapshot2 = await query2.get();
+    // Get the results of both queries
+    final snapshot1 = await query1.get();
+    final snapshot2 = await query2.get();
 
-  // Combine the results using Set to remove duplicate documents
-  final overlappingTrips = <QueryDocumentSnapshot>{...snapshot1.docs, ...snapshot2.docs}.toList();
+    // Combine the results using Set to remove duplicate documents
+    final overlappingTrips =
+        <QueryDocumentSnapshot>{...snapshot1.docs, ...snapshot2.docs}.toList();
 
-  // Check if there are overlapping trips
-  bool isValid = true;
-  for (final trip in overlappingTrips) {
-    final tripStartDate = trip['dateStart'] as Timestamp;
-    final tripEndDate = trip['dateEnd'] as Timestamp;
-    if (startDate.compareTo(tripEndDate) <= 0 && endDate.compareTo(tripStartDate) >= 0) {
-      isValid = false;
-      break;
+    // Check if there are overlapping trips
+    bool isValid = true;
+    for (final trip in overlappingTrips) {
+      final tripStartDate = trip['dateStart'] as Timestamp;
+      final tripEndDate = trip['dateEnd'] as Timestamp;
+      if (startDate.compareTo(tripEndDate) <= 0 &&
+          endDate.compareTo(tripStartDate) >= 0) {
+        isValid = false;
+        break;
+      }
     }
+
+    return isValid;
   }
 
-  return isValid;
-}
   CreateTrip() async {
     if (_file == null) {
       AwesomeDialog(
@@ -530,9 +552,11 @@ class _CreateTripPageState extends State<CreateTripPage> {
       ).show();
       return;
     }
-    final dateStart=Timestamp.fromMillisecondsSinceEpoch(_dates[0]!.millisecondsSinceEpoch);
-    final dateEnd=Timestamp.fromMillisecondsSinceEpoch(_dates[1]!.millisecondsSinceEpoch);
-    final check=await isTripDateValid(dateStart,dateEnd);
+    final dateStart =
+        Timestamp.fromMillisecondsSinceEpoch(_dates[0]!.millisecondsSinceEpoch);
+    final dateEnd =
+        Timestamp.fromMillisecondsSinceEpoch(_dates[1]!.millisecondsSinceEpoch);
+    final check = await isTripDateValid(dateStart, dateEnd);
     if (!check) {
       AwesomeDialog(
         context: context,
@@ -544,6 +568,13 @@ class _CreateTripPageState extends State<CreateTripPage> {
       ).show();
       return;
     }
+
+    final listActivities = [];
+
+    for (var e in activitiesChoose) {
+      listActivities.add(activities.keys.elementAt(e));
+    }
+
     final trips = FirebaseFirestore.instance.collection('Trip');
     await trips.add({
       "destination": selectedValue,
@@ -553,14 +584,16 @@ class _CreateTripPageState extends State<CreateTripPage> {
       "quantity": quantity,
       "description": _descriptionController.text.trim(),
       "members": [],
-      "status":"pending",
-      "activities": [],
+      "status": "pending",
+      "activities": listActivities,
       "idCreator": FirebaseUtil.currentUser!.uid,
-
     }).then((value) async {
       final task = await storage.child("${value.id}.jpg").putFile(_file!);
       final linkImage = await task.ref.getDownloadURL();
-      trips.doc(value.id).update({"idTrip": value.id, "image": linkImage,});
+      trips.doc(value.id).update({
+        "idTrip": value.id,
+        "image": linkImage,
+      });
       AwesomeDialog(
         context: context,
         dialogType: DialogType.success,
@@ -572,5 +605,83 @@ class _CreateTripPageState extends State<CreateTripPage> {
       clear();
     });
     // Navigator.pop(context);
+  }
+
+  Widget _buildActivities() {
+    return SizedBox(
+      height: 235,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Hoạt động',
+                textAlign: TextAlign.left,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Expanded(
+              child: Center(
+                child: activities.isEmpty
+                    ? const Text(
+                        'Không có hoạt động nào',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    : Wrap(
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        children: List.generate(
+                          activities.keys.length,
+                          (index) => _buttonActivity(
+                              activities.keys.elementAt(index).toString(),
+                              activities.values.elementAt(index).toString(),
+                              index),
+                        )),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buttonActivity(text, icon, index) {
+    return Wrap(children: [
+      Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: InkWell(
+          onTap: () {
+            if (!activitiesChoose.contains(index)) {
+              activitiesChoose.add(index);
+            } else {
+              activitiesChoose.remove(index);
+            }
+            setState(() {});
+          },
+          child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  color: CustomColor.buttonActivityBgColor.withOpacity(.5),
+                  border: Border.all(
+                      color: activitiesChoose.contains(index)
+                          ? CustomColor.blue
+                          : Colors.transparent)),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Wrap(
+                children: [
+                  Text(icon),
+                  Text(' ${text}'),
+                ],
+              )),
+        ),
+      ),
+      SizedBox(
+        width: 6,
+      ),
+    ]);
   }
 }
