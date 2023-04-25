@@ -9,9 +9,12 @@ import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/model/custom_user.dart';
 import 'package:go_together/model/trip.dart';
 import 'package:go_together/utils/date_time_utils.dart';
+import 'package:go_together/utils/firebase_utils.dart';
 import 'package:go_together/widget/custom_button.dart';
 import 'package:go_together/widget/custom_medium_divider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../model/notification.dart';
 
 class TripDetailPage extends StatelessWidget {
   TripDetailPage({super.key, required this.trip});
@@ -105,7 +108,42 @@ class TripDetailPage extends StatelessWidget {
           height: 70,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-            child: CustomButton(onPressed: () {}, text: 'Yêu cầu tham gia'),
+            child: CustomButton(
+                onPressed: () async {
+                  MyNotification notification = MyNotification(
+                      idNoti: '',
+                      idReceiver: trip.idCreator,
+                      idSender: FirebaseUtil.currentUser!.uid,
+                      idTrip: trip.idTrip,
+                      fullName: FirebaseUtil.currentUser!.displayName ?? "",
+                      imgAva: FirebaseUtil.currentUser!.photoURL ?? "",
+                      title: trip.title,
+                      type: 'tripRequest',
+                      status: 'pending');
+
+                  final count = await FirebaseFirestore.instance
+                      .collection('Notification')
+                      .where("idSender",
+                          isEqualTo: FirebaseUtil.currentUser!.uid)
+                      .where("idTrip", isEqualTo: trip.idTrip)
+                      .get();
+
+                  if (count.docs.isEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('Notification')
+                        .add(notification.toJson())
+                        .then((value) async {
+                      await FirebaseFirestore.instance
+                          .collection('Notification')
+                          .doc(value.id)
+                          .update({"idNoti": value.id});
+                    });
+                  }
+                  else {
+                    
+                  }
+                },
+                text: 'Yêu cầu tham gia'),
           ),
         ));
   }
