@@ -9,6 +9,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_together/common/custom_color.dart';
+import 'package:go_together/repository/chat_repository.dart';
 import 'package:go_together/utils/firebase_utils.dart';
 import 'package:go_together/widget/custom_app_bar.dart';
 import 'package:go_together/widget/custom_button.dart';
@@ -561,6 +562,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
       final task = await storage.child("${value.id}.jpg").putFile(_file!);
       final linkImage = await task.ref.getDownloadURL();
       trips.doc(value.id).update({"idTrip": value.id, "image": linkImage,});
+      await ChatRepository().CreateGroupChannel(context: context,idTrip: value.id,image: linkImage,title: _titleController.text.trim().toString());
       AwesomeDialog(
         context: context,
         dialogType: DialogType.success,

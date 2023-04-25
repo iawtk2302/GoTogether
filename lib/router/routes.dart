@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/screen/chat/search_chat_page.dart';
 import 'package:go_together/screen/create_trip_page.dart';
 import 'package:go_together/screen/notification_page.dart';
-import 'package:go_together/screen/search_page.dart';
+import 'package:go_together/screen/search_trip/search_page.dart';
 import 'package:go_together/utils/chatUtils.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:go_together/model/trip.dart';

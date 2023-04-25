@@ -8,6 +8,7 @@ import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/router/routes.dart';
 import 'package:go_together/screen/main_page.dart';
 import 'bloc/map_support/map_support_bloc.dart';
+import 'bloc/search_filter_trip/search_filter_trip_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (context) => SearchFilterTripBloc()),
         BlocProvider(create: (_) => HomeBloc()..add(HomeLoadEvent())),
         BlocProvider(create: (context) => MapSupportBloc()),
         BlocProvider(create: (context) => ManageTripBloc())

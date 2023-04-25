@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_together/common/custom_color.dart';
+import 'package:go_together/repository/chat_repository.dart';
 
 import '../model/notification.dart';
 
@@ -34,7 +35,9 @@ class ItemNotification extends StatelessWidget {
                 SizedBox(height: 2,),
                 Text(notification.title, style: TextStyle(fontSize: 14),),
               ],),
-              IconButton(onPressed: (){}, icon: Icon(Icons.chat))
+              IconButton(onPressed: ()async{
+                await ChatRepository().CreateMessageChannel(context, notification);
+              }, icon: Icon(Icons.chat))
             ],),
             SizedBox(height: 6,),
             Row(
@@ -44,6 +47,9 @@ class ItemNotification extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: InkWell(
+                  onTap: (){
+                    ChatRepository().AddMember(myNotification: notification);
+                  },
                   child: Container(
                     height: 40,
                     decoration: BoxDecoration(

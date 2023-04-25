@@ -55,6 +55,7 @@ class _ChannelListPageState extends State<ChannelListPage>{
       'member_count',
       2,
     ),
+     Filter.equal('type', 'messaging'),
   ]);
    late final StreamChannelListController _listController = StreamChannelListController(
     client: StreamChat.of(context).client,

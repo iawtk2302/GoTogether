@@ -34,9 +34,9 @@ class _FavoritePageState extends State<FavoritePage> {
     // });
     // final channel = ChatUtil.client.channel(channelType, id: channelID);
     Future<void> CreateChannel(BuildContext context)async {
-      final core=ChatUtil.client;
-      final channel=core.channel('messaging',extraData: {
-        "members":[core.state.currentUser!.id,"khoihaycuoi"]
+      final client=ChatUtil.client;
+      final channel=client.channel('messaging',extraData: {
+        "members":[client.state.currentUser!.id,"khoihaycuoi"]
       });
       await channel.watch();
       Navigator.pushNamed(context, Routes.channel,
