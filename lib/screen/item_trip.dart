@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_together/model/trip.dart';
+import 'package:go_together/router/routes.dart';
 import 'package:go_together/utils/utils.dart';
 
 class ItemTrip extends StatelessWidget {
   const ItemTrip({
-    super.key, required this.trip,
+    super.key,
+    required this.trip,
   });
   final Trip trip;
 
@@ -13,7 +15,9 @@ class ItemTrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, Routes.tripDetail, arguments: trip);
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
         child: Column(
@@ -32,8 +36,7 @@ class ItemTrip extends StatelessWidget {
                         height: double.infinity,
                         child: CachedNetworkImage(
                           fit: BoxFit.fill,
-                          imageUrl:
-                              trip.image,
+                          imageUrl: trip.image,
                         ),
                       )),
                   Positioned(

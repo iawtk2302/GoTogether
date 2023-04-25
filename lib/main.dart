@@ -2,17 +2,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/home/home_bloc.dart';
+import 'package:go_together/bloc/manage_trip/manage_trip_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
 import 'package:go_together/router/routes.dart';
-import 'package:go_together/screen/create_trip_page.dart';
-import 'package:go_together/screen/fill_profile_page.dart';
-import 'package:go_together/screen/login_page.dart';
 import 'package:go_together/screen/main_page.dart';
 
 import 'bloc/chat/chat_bloc.dart';
+import 'bloc/map_support/map_support_bloc.dart';
 
-
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -29,6 +27,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (_) => HomeBloc()..add(HomeLoadEvent())),
         BlocProvider(create: (context) => ChatBloc()),
+        BlocProvider(create: (context) => MapSupportBloc()),
+        BlocProvider(create: (context) => ManageTripBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
