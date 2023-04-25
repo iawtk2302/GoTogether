@@ -5,4 +5,5 @@ class CustomColor{
   static Color bg=Colors.white;
   static Color grey=Color(0xFFB7BBCA);
   static Color blue1=Color(0xFFF2F6FC);
+  static Color buttonActivityBgColor = Color(0xFFC1D3FF);
 }

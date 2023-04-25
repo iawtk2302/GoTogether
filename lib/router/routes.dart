@@ -6,7 +6,10 @@ import 'package:go_together/screen/notification_page.dart';
 import 'package:go_together/screen/search_page.dart';
 import 'package:go_together/utils/chatUtils.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-
+import 'package:go_together/model/trip.dart';
+import 'package:go_together/screen/create_trip_page.dart';
+import 'package:go_together/screen/manage_trips/manage_trips_page.dart';
+import 'package:go_together/screen/trip_detail/trip_detail_page.dart';
 
 import '../screen/auth/check_info.dart';
 import '../screen/auth/forgot_pass_page.dart';
@@ -15,7 +18,6 @@ import '../screen/auth/register_page.dart';
 import '../screen/chat/channel_page.dart';
 import '../screen/home_page.dart';
 import '../screen/main_page.dart';
-
 
 class Routes {
   static const login = '/LoginPage';
@@ -30,6 +32,9 @@ class Routes {
   static const search = '/SearchPage';
   static const notification = '/NotificationPage';
   static const searchChat = '/SearchChatPage';
+  static const manageTrips = '/manageTrips';
+  static const tripDetail = '/tripDetail';
+
   Route? getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.login:
@@ -81,27 +86,41 @@ class Routes {
                   debugShowCheckedModeBanner: false,
                   builder: (context, widget) {
                     return StreamChat(
-                          client: ChatUtil.client,
-                          child: widget,
-                        );
+                      client: ChatUtil.client,
+                      child: widget,
+                    );
                   },
                   home: StreamChannel(
                     channel: arg,
-                    child:  ChannelPage(buildContext: context,),
+                    child: ChannelPage(
+                      buildContext: context,
+                    ),
                   ),
                 );
               },
               settings: settings);
         }
-        case Routes.notification:
+      case Routes.notification:
         {
           return MaterialPageRoute(
-              builder: (context) => const NotificationPage(), settings: settings);
+              builder: (context) => const NotificationPage(),
+              settings: settings);
         }
-        case Routes.searchChat:{
+      case Routes.searchChat:
+        {
           return MaterialPageRoute(
-              builder: (context) => SearchChatPage(buildContext: context,), settings: settings);
+              builder: (context) => SearchChatPage(
+                    buildContext: context,
+                  ),
+              settings: settings);
         }
+      case Routes.manageTrips:
+        return SlideRightRoute(
+            widget: const ManageTripsPage(), settings: settings);
+      case tripDetail:
+        final trip = settings.arguments as Trip;
+        return SlideRightRoute(
+            widget: TripDetailPage(trip: trip), settings: settings);
     }
     return null;
   }

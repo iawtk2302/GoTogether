@@ -553,12 +553,14 @@ class _CreateTripPageState extends State<CreateTripPage> {
       "quantity": quantity,
       "description": _descriptionController.text.trim(),
       "members": [],
+      "status":"pending",
       "activities": [],
-      "isActive": true
+      "idCreator": FirebaseUtil.currentUser!.uid,
+
     }).then((value) async {
       final task = await storage.child("${value.id}.jpg").putFile(_file!);
       final linkImage = await task.ref.getDownloadURL();
-      trips.doc(value.id).update({"idTrip": value.id, "image": linkImage});
+      trips.doc(value.id).update({"idTrip": value.id, "image": linkImage,});
       AwesomeDialog(
         context: context,
         dialogType: DialogType.success,
