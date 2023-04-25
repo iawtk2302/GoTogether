@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/repository/auth_repository.dart';
-import 'package:go_together/screen/register_page.dart';
 import 'package:go_together/widget/custom_textfield.dart';
 
-import '../router/routes.dart';
-import '../widget/auth_button.dart';
+import '../../router/routes.dart';
+import '../../widget/auth_button.dart';
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -55,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               CustomTextFormField(
-                                hint: "Email",
+                                hint: "Example@gmail.com",
                                 title: "Email",
                                 obscureText: false,
                                 textEditingController: _emailController,
@@ -71,10 +72,10 @@ class _LoginPageState extends State<LoginPage> {
                                 textInputType: TextInputType.emailAddress,
                               ),
                               SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               CustomTextFormField(
-                                hint: "Password",
+                                hint: "Your Password",
                                 title: "Password",
                                 obscureText: true,
                                 textEditingController: _passController,
@@ -107,13 +108,13 @@ class _LoginPageState extends State<LoginPage> {
                             height: 50,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Color(0xFFa1f781)),
+                                color: CustomColor.blue),
                             child: const Center(
                                 child: Text("Sign In",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black))),
+                                        color: Colors.white))),
                           ),
                         ),
                       ),
@@ -128,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Forgot the password?",
                           style: TextStyle(
-                              color: CustomColor.green,
+                              color: CustomColor.blue,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -199,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               "Sign up",
                               style: TextStyle(
-                                  color: CustomColor.green,
+                                  color: CustomColor.blue,
                                   fontWeight: FontWeight.w700),
                             ),
                           )

@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'check_info.dart';
-import 'login_page.dart';
+import 'auth/check_info.dart';
+import 'auth/login_page.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

@@ -46,22 +46,26 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            widget.title!,
-            style: TextStyle(
-                 fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-              height: widget.height??75,
+    return Container(
+      height: widget.height==null? 70:70+widget.height!,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: CustomColor.blue1,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 10,),
+            Text(
+                        widget.title!,
+                        style: TextStyle(
+               fontSize: 14, fontWeight: FontWeight.bold,color: CustomColor.grey),
+                      ),
+            Container(
+              height: widget.height??40,
               child: TextFormField(
                 validator: widget.validate!=null?(text) => widget.validate!(text):null,
                 minLines: widget.minLines??1,
@@ -73,22 +77,22 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 maxLength: widget.maxLength,
                 enabled: widget.enabled,
                 obscuringCharacter: '●',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
+                    border: InputBorder.none,
                     hintText: widget.hint,
-                    hintStyle: TextStyle(color: CustomColor.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color(0xFFBDC1C6), width: 2.0),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: CustomColor.green, width: 2.0),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
+                    hintStyle: TextStyle(color: CustomColor.grey, fontSize: 16, fontWeight: FontWeight.w400),
+                    // enabledBorder: OutlineInputBorder(
+                    //   borderSide: const BorderSide(
+                    //       color: Color(0xFFBDC1C6), width: 2.0),
+                    //   borderRadius: BorderRadius.circular(5.0),
+                    // ),
+                    // focusedBorder: OutlineInputBorder(
+                    //   borderSide:
+                    //       BorderSide(color: CustomColor.green, width: 2.0),
+                    //   borderRadius: BorderRadius.circular(5.0),
+                    // ),
+                    
                     suffixIcon: widget.obscureText == true
                         ? InkWell(
                             onTap: () {
@@ -105,8 +109,19 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                           )
                         : widget.suffixIcon,
                     errorStyle: TextStyle(fontSize: 14)),
-              )),
-        ],
+              ),
+            ),
+                // Positioned(
+                //   top: 10,
+                 
+                //   child: Text(
+                //               widget.title!,
+                //               style: TextStyle(
+                //      fontSize: 14, fontWeight: FontWeight.w500,color: CustomColor.grey),
+                //             ),
+                // ),
+          ],
+        ),
       ),
     );
   }

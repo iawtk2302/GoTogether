@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/common/custom_color.dart';
@@ -11,11 +10,12 @@ import 'package:go_together/widget/custom_textfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../bloc/user/user_bloc.dart';
+import '../../model/custom_user.dart';
+import '../../widget/custom_button.dart';
 
-import '../bloc/user/user_bloc.dart';
-import '../model/custom_user.dart';
-import '../router/routes.dart';
-import '../widget/custom_button.dart';
+
+
 
 class FillProfilePage extends StatefulWidget {
   const FillProfilePage({super.key});
@@ -45,9 +45,11 @@ class _FillProfilePageState extends State<FillProfilePage> {
       appBar: AppBar(
         backgroundColor: CustomColor.bg,
         elevation: 0,
-        title: Text(
-          "Fill Your Profile",
-          style: TextStyle( fontWeight: FontWeight.w600),
+        title: Center(
+          child: Text(
+            "Fill Your Profile",
+            style: TextStyle( fontWeight: FontWeight.w600,color: Colors.black),
+          ),
         ),
       ),
       body: Container(
@@ -106,6 +108,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 15,),
                   // InfoInput(
                   //   hintText: "First Name",
                   //   controller: _firstNameController,
@@ -160,6 +163,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 15,),
                   CustomTextFormField(
                     hint: "Phone",
                     title: "Phone",
@@ -170,7 +174,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                     ),
                     textInputType: TextInputType.phone,
                     textEditingController: _phoneController,
-                    maxLength: 10,
+                    // maxLength: 10,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
                         return "Required";
@@ -182,6 +186,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 15,),
                   // Padding(
                   //   padding: const EdgeInsets.symmetric(vertical: 10),
                   //   child: Container(
@@ -229,8 +234,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                     enabled: true,
                     readOnly: true,
                   ),
-                  GenderSelection(),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 15,),
                   CustomTextFormField(
                     hint: "Address",
                     title: "Address",
@@ -242,6 +246,12 @@ class _FillProfilePageState extends State<FillProfilePage> {
                       return null;
                     },
                   ),
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: GenderSelection(),
+                  ),
+                  SizedBox(height: 10,),
                   const SizedBox(
                     height: 10,
                   ),
@@ -348,7 +358,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
         return Theme(
             data: Theme.of(context).copyWith(
               colorScheme: ThemeData().colorScheme.copyWith(
-                    primary: CustomColor.green,
+                    primary: CustomColor.blue,
                   ),
             ),
             child: child!);
@@ -379,9 +389,13 @@ class _FillProfilePageState extends State<FillProfilePage> {
           hobby: [],
           phone: _phoneController.text);
       await firestore.collection('User').doc(id).set(user.toJson());
+      await FirebaseAuth.instance.currentUser!.updatePhotoURL(linkImage);
+      await FirebaseAuth.instance.currentUser!.updateDisplayName(_fullNameController.text.trim());
+      await FirebaseAuth.instance.currentUser!.updateEmail(_emailController.text.trim());
       // ignore: use_build_context_synchronously
 
       // BlocProvider.of<UserBloc>(context).add(SubmitInfoUser(user: user));
+      print("thành công");
       BlocProvider.of<UserBloc>(context).add(LoadUser());
     } on FirebaseException catch (e) {
       print(e);
@@ -392,10 +406,10 @@ class _FillProfilePageState extends State<FillProfilePage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Gender",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
+        Text("Gender",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: CustomColor.grey),),
         SizedBox(height: 10,),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("Male",style: TextStyle(fontSize: 16)),
@@ -405,7 +419,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                   _selectedGender="Male";
                 });
               },
-              child: Icon(_selectedGender=="Male"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Male"?CustomColor.green:CustomColor.grey ,),
+              child: Icon(_selectedGender=="Male"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Male"?CustomColor.blue:CustomColor.grey ,),
             ),
             SizedBox(width: 20,),
             Text("Female",style: TextStyle(fontSize: 16),),
@@ -415,7 +429,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                   _selectedGender="Female";
                 });
               },
-              child: Icon(_selectedGender=="Female"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Female"?CustomColor.green:CustomColor.grey ,),
+              child: Icon(_selectedGender=="Female"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Female"?CustomColor.blue:CustomColor.grey ,),
             ),
             SizedBox(width: 20,),
             Text("Other",style: TextStyle(fontSize: 16),),
@@ -425,7 +439,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                   _selectedGender="Other";
                 });
               },
-              child: Icon(_selectedGender=="Other"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Other"?CustomColor.green:CustomColor.grey ,),
+              child: Icon(_selectedGender=="Other"?Icons.radio_button_checked:Icons.radio_button_unchecked,color:_selectedGender=="Other"?CustomColor.blue:CustomColor.grey ,),
             ),
           ],
         ),

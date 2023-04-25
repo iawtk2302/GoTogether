@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/home/home_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
+import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/router/routes.dart';
-import 'package:go_together/screen/create_trip_page.dart';
-import 'package:go_together/screen/fill_profile_page.dart';
-import 'package:go_together/screen/login_page.dart';
 import 'package:go_together/screen/main_page.dart';
 
-import 'bloc/chat/chat_bloc.dart';
 
 
 Future<void> main() async{
@@ -28,14 +25,13 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (_) => HomeBloc()..add(HomeLoadEvent())),
-        BlocProvider(create: (context) => ChatBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Go Together',
         onGenerateRoute: (settings) => Routes().getRoute(settings),
         theme: ThemeData(
-          primarySwatch: createMaterialColor(Colors.green),
+          primarySwatch: createMaterialColor(CustomColor.blue),
           // textTheme: ThemeData.light().textTheme.copyWith(
           //       bodyText1: TextStyle(color: Colors.white),
           //       bodyText2: TextStyle(color: Colors.white),

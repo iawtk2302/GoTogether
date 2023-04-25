@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
+import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/repository/auth_repository.dart';
-import 'package:go_together/screen/fill_profile_page.dart';
+import 'package:go_together/screen/auth/fill_profile_page.dart';
 import 'package:go_together/screen/home_page.dart';
 import 'package:go_together/screen/profile_page.dart';
+import 'package:go_together/screen/chat/chat_message_page.dart';
+import '../chat/chat_page.dart';
+import '../favorite_page.dart';
 
-import 'chat_page.dart';
-import 'favorite_page.dart';
 
 
 class CheckInfoPage extends StatefulWidget {
@@ -95,7 +97,7 @@ class _MainPageContentState extends State<MainPageContent>
         ],
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.green,
+        selectedItemColor: CustomColor.blue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),

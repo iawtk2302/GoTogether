@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/repository/auth_repository.dart';
 
+import '../../widget/custom_textfield.dart';
 
-import '../router/routes.dart';
-import '../widget/custom_textfield.dart';
+
+
 
 class ForgotPassPage extends StatefulWidget {
   const ForgotPassPage({super.key});
@@ -36,7 +37,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
         child: SingleChildScrollView(
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 70),
               child: Image.asset("assets/images/forgot_pass.png"),
             ),
             Padding(
@@ -45,7 +46,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Forgot",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700,color: Colors.white),
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
                   )),
             ),
             Padding(
@@ -54,7 +55,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                   alignment: Alignment.centerLeft,
                   child: Text("Password",
                       style: TextStyle(
-                          fontSize: 32, fontWeight: FontWeight.w700,color: Colors.white))),
+                          fontSize: 32, fontWeight: FontWeight.w700))),
             ),
             const SizedBox(height: 20),
             Padding(
@@ -63,25 +64,28 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                       "Don't worry! It happen. Please enter the address associated with your account.",
-                      style: TextStyle(fontSize: 16,color: Colors.white))),
+                      style: TextStyle(fontSize: 16))),
             ),
             const SizedBox(height: 50),
-            CustomTextFormField(
-                              hint: "Email",
-                              title: "Email",
-                              obscureText: false,
-                              textEditingController: _emailController,
-                              validate: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                        .hasMatch(value)) {
-                                  return "Invalid email";
-                                }
-                                return null;
-                              },
-                              textInputType: TextInputType.emailAddress,
-                            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: CustomTextFormField(
+                                hint: "Email",
+                                title: "Email",
+                                obscureText: false,
+                                textEditingController: _emailController,
+                                validate: (value) {
+                                  if (value == null ||
+                                      value.isEmpty ||
+                                      !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          .hasMatch(value)) {
+                                    return "Invalid email";
+                                  }
+                                  return null;
+                                },
+                                textInputType: TextInputType.emailAddress,
+                              ),
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -107,13 +111,13 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                             height: 50,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Color(0xFFa1f781)),
+                                color: CustomColor.blue),
                             child: const Center(
                                 child: Text("Reset Password",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black))),
+                                        color: Colors.white))),
                           ),
                         ),
                       ),

@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_together/common/custom_color.dart';
 
-import '../repository/auth_repository.dart';
-import '../router/routes.dart';
-import '../widget/auth_button.dart';
+import '../../repository/auth_repository.dart';
+import '../../router/routes.dart';
+import '../../widget/auth_button.dart';
+import '../../widget/custom_textfield.dart';
 
-import '../widget/custom_textfield.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -70,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             textInputType: TextInputType.emailAddress,
                           ),
                           SizedBox(
-                            height: 5,
+                            height: 15,
                           ),
                           CustomTextFormField(
                             hint: "Password",
@@ -85,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             textInputType: TextInputType.text,
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 15,
                           ),
                           CustomTextFormField(
                             hint: "Confirm Password",
@@ -122,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: Color(0xFFa1f781)),
+                            color: CustomColor.blue),
                         child: const Center(
                             child: Text("Sign Up",
                                 style: TextStyle(
@@ -193,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Text(
                           "Sign in",
                           style: TextStyle(
-                              color: CustomColor.green,
+                              color: CustomColor.blue,
                               fontWeight: FontWeight.w700),
                         ),
                       )
