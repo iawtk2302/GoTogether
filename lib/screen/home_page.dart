@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/router/routes.dart';
-import 'package:go_together/screen/item_trip.dart';
+import 'package:go_together/widget/item_trip.dart';
 
 import '../bloc/home/home_bloc.dart';
 import '../bloc/user/user_bloc.dart';
+import '../utils/chatUtils.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +17,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+@override
+  void initState() {
+    ChatUtil.initChat();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -24,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: 210,
             width: double.infinity,
-            color: Colors.green,
+            color: CustomColor.blue,
             child: Column(children: [
               SizedBox(
                 height: MediaQuery.of(context).viewPadding.top,
@@ -63,7 +72,9 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(
                             left: 8.0, right: 4, top: 4, bottom: 4),
                         child: Row(children: [
-                          const Icon(Icons.menu, color: Colors.white),
+                           IconButton(icon:Icon(Icons.notifications, color: Colors.white),onPressed:() {
+                            Navigator.pushNamed(context, Routes.notification);
+                          },),
                           const SizedBox(
                             width: 16,
                           ),
@@ -115,28 +126,34 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                           child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children:  [
                           Icon(
                             Icons.arrow_circle_right_rounded,
-                            color: Colors.green,
+                            color: CustomColor.blue,
                           ),
                           SizedBox(
                             width: 12,
                           ),
                           Expanded(
-                              child: TextField(
-                            cursorColor: Colors.green,
-                            decoration: InputDecoration(
-                              hintText: 'Tìm kiếm',
-                              hintStyle: TextStyle(fontSize: 12),
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.green, width: 1)),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.green, width: 1)),
-                            ),
-                          )),
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.pushNamed(context, Routes.search);
+                                },
+                                child: TextField(
+                                                          cursorColor: CustomColor.blue,
+                                                          enabled: false,
+                                                          decoration: InputDecoration(
+                                hintText: 'Search location',
+                                hintStyle: TextStyle(fontSize: 12),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: CustomColor.blue, width: 1)),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: CustomColor.blue, width: 1)),
+                                                          ),
+                                                        ),
+                              )),
                         ],
                       ))
                     ]),

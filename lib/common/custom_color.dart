@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomColor{
-  static Color green=Colors.green;
+  static Color blue=Color(0xFF537FE7);
   static Color bg=Colors.white;
-  static Color grey=Color(0xFFBDC1C6);
+  static Color grey=Color(0xFFB7BBCA);
+  static Color blue1=Color(0xFFF2F6FC);
   static Color buttonActivityBgColor = Color(0xFFC1D3FF);
 }

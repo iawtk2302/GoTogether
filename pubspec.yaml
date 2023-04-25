@@ -50,6 +50,9 @@ dependencies:
   flutter_bloc: ^8.1.2
   equatable: ^2.0.5
   stream_chat_flutter: ^5.3.0
+  dotted_border: ^2.0.0+3
+  awesome_dialog: ^3.0.2
+  flutter_emoji_feedback: ^0.1.2
   google_maps_flutter: ^2.2.5
   # flutter_google_places: ^0.3.0
   geolocator: ^9.0.2
@@ -59,6 +62,7 @@ dependencies:
   google_maps_routes: ^1.1.2
   rxdart: ^0.27.0
   flutter_google_places_sdk: ^0.3.2+6
+  fluttertoast: ^8.2.1
 
   flutter_google_places:
     git: 

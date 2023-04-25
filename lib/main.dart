@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/home/home_bloc.dart';
 import 'package:go_together/bloc/manage_trip/manage_trip_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
+import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/router/routes.dart';
 import 'package:go_together/screen/main_page.dart';
-
-import 'bloc/chat/chat_bloc.dart';
 import 'bloc/map_support/map_support_bloc.dart';
 
 Future<void> main() async {
@@ -26,7 +25,6 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (_) => HomeBloc()..add(HomeLoadEvent())),
-        BlocProvider(create: (context) => ChatBloc()),
         BlocProvider(create: (context) => MapSupportBloc()),
         BlocProvider(create: (context) => ManageTripBloc())
       ],
@@ -35,7 +33,7 @@ class MyApp extends StatelessWidget {
         title: 'Go Together',
         onGenerateRoute: (settings) => Routes().getRoute(settings),
         theme: ThemeData(
-          primarySwatch: createMaterialColor(Colors.green),
+          primarySwatch: createMaterialColor(CustomColor.blue),
           // textTheme: ThemeData.light().textTheme.copyWith(
           //       bodyText1: TextStyle(color: Colors.white),
           //       bodyText2: TextStyle(color: Colors.white),

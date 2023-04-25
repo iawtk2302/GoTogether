@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_together/screen/chat/search_chat_page.dart';
+import 'package:go_together/screen/create_trip_page.dart';
+import 'package:go_together/screen/notification_page.dart';
+import 'package:go_together/screen/search_page.dart';
+import 'package:go_together/utils/chatUtils.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:go_together/model/trip.dart';
 import 'package:go_together/screen/create_trip_page.dart';
 import 'package:go_together/screen/manage_trips/manage_trips_page.dart';
 import 'package:go_together/screen/trip_detail/trip_detail_page.dart';
 
-import '../screen/forgot_pass_page.dart';
-import '../screen/check_info.dart';
+import '../screen/auth/check_info.dart';
+import '../screen/auth/forgot_pass_page.dart';
+import '../screen/auth/login_page.dart';
+import '../screen/auth/register_page.dart';
+import '../screen/chat/channel_page.dart';
 import '../screen/home_page.dart';
-import '../screen/login_page.dart';
 import '../screen/main_page.dart';
-import '../screen/register_page.dart';
 
 class Routes {
   static const login = '/LoginPage';
@@ -20,6 +28,10 @@ class Routes {
   static const auth = '/AuthPage';
   static const checkInfo = '/CheckInfoPage';
   static const createTrip = '/CreateTripPage';
+  static const channel = '/ChannelPage';
+  static const search = '/SearchPage';
+  static const notification = '/NotificationPage';
+  static const searchChat = '/SearchChatPage';
   static const manageTrips = '/manageTrips';
   static const tripDetail = '/tripDetail';
 
@@ -60,6 +72,48 @@ class Routes {
           return MaterialPageRoute(
               builder: (context) => const CreateTripPage(), settings: settings);
         }
+      case Routes.search:
+        {
+          return MaterialPageRoute(
+              builder: (context) => const SearchPage(), settings: settings);
+        }
+      case Routes.channel:
+        final arg = settings.arguments as Channel;
+        {
+          return MaterialPageRoute(
+              builder: (context) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  builder: (context, widget) {
+                    return StreamChat(
+                      client: ChatUtil.client,
+                      child: widget,
+                    );
+                  },
+                  home: StreamChannel(
+                    channel: arg,
+                    child: ChannelPage(
+                      buildContext: context,
+                    ),
+                  ),
+                );
+              },
+              settings: settings);
+        }
+      case Routes.notification:
+        {
+          return MaterialPageRoute(
+              builder: (context) => const NotificationPage(),
+              settings: settings);
+        }
+      case Routes.searchChat:
+        {
+          return MaterialPageRoute(
+              builder: (context) => SearchChatPage(
+                    buildContext: context,
+                  ),
+              settings: settings);
+        }
       case Routes.manageTrips:
         return SlideRightRoute(
             widget: const ManageTripsPage(), settings: settings);
@@ -68,6 +122,7 @@ class Routes {
         return SlideRightRoute(
             widget: TripDetailPage(trip: trip), settings: settings);
     }
+    return null;
   }
 }
 
