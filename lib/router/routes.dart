@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/screen/chat/search_chat_page.dart';
 import 'package:go_together/screen/create_trip_page.dart';
+import 'package:go_together/screen/manage_trips/trip_owner_preview.dart';
 import 'package:go_together/screen/notification_page.dart';
 import 'package:go_together/screen/search_page.dart';
 import 'package:go_together/utils/chatUtils.dart';
@@ -34,6 +35,7 @@ class Routes {
   static const searchChat = '/SearchChatPage';
   static const manageTrips = '/manageTrips';
   static const tripDetail = '/tripDetail';
+  static const tripOwnerPreview = '/tripOwnerPreview';
 
   Route? getRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -121,6 +123,10 @@ class Routes {
         final trip = settings.arguments as Trip;
         return SlideRightRoute(
             widget: TripDetailPage(trip: trip), settings: settings);
+      case tripOwnerPreview:
+        final trip = settings.arguments as Trip;
+        return SlideRightRoute(
+            widget: TripOwnerPreview(trip: trip), settings: settings);
     }
     return null;
   }

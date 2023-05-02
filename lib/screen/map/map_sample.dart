@@ -9,6 +9,7 @@ import 'package:flutter_google_places/flutter_google_places.dart';
 // import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_together/bloc/map_support/map_support_bloc.dart';
+import 'package:go_together/model/trip.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_routes/google_maps_routes.dart';
 import 'package:logger/logger.dart';
@@ -19,14 +20,18 @@ import '../../utils/map_utils.dart';
 import 'categories_places.dart';
 
 class MapSuport extends StatefulWidget {
-  const MapSuport({Key? key, required this.icon}) : super(key: key);
+  const MapSuport({Key? key, required this.icon, required this.trip})
+      : super(key: key);
   final BitmapDescriptor icon;
+  final Trip trip;
   @override
   State<MapSuport> createState() => MapSuportState();
 }
 
 class MapSuportState extends State<MapSuport> {
   final Completer<GoogleMapController> _controller = Completer();
+
+  StreamSubscription<Position>? positionStream;
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(10.874327, 106.7992051),
@@ -37,6 +42,14 @@ class MapSuportState extends State<MapSuport> {
   void initState() {
     _goToGPS();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (positionStream != null) {
+      positionStream?.cancel();
+    }
+    super.dispose();
   }
 
   // list of locations to display polylines
@@ -71,7 +84,7 @@ class MapSuportState extends State<MapSuport> {
                     markerId: MarkerId((element.idUser).toString()),
                     position: LatLng(
                         double.parse(element.lat), double.parse(element.lng)),
-                    icon: widget.icon,
+                    icon: state.icons![element.idUser]!,
                   ));
                 }
               }
@@ -219,8 +232,6 @@ class MapSuportState extends State<MapSuport> {
   }
 
   Future<void> _goToGPS() async {
-    BlocProvider.of<MapSupportBloc>(context)
-        .add(MapSupportLoadMembersEvent(idTrip: 'FFzJN5KFzODQnKKf21HI'));
     final GoogleMapController controller = await _controller.future;
     Position position = await MapUtils.determinePosition();
     // setState(() {
@@ -237,8 +248,7 @@ class MapSuportState extends State<MapSuport> {
       );
       latLen.add(LatLng(position.latitude, position.longitude));
     });
-
-    Geolocator.getPositionStream().listen(
+    positionStream = Geolocator.getPositionStream().listen(
       (event) {
         // Logger().v(event.latitude);
         if (markers.any((element) => element.markerId == MarkerId('gps'))) {
@@ -266,7 +276,7 @@ class MapSuportState extends State<MapSuport> {
         BlocProvider.of<MapSupportBloc>(context).add(
             MapSupportUpdatePositionToFirebase(
                 latLng: LatLng(position.latitude, position.longitude),
-                idTrip: "FFzJN5KFzODQnKKf21HI"));
+                idTrip: widget.trip.idTrip));
       },
     );
 
@@ -292,7 +302,7 @@ class MapSuportState extends State<MapSuport> {
   //       context: context,
   //       types: [],
   //       strictbounds: false,
-  //       apiKey: 'AIzaSyA09eMUuqRfjv3n269vbf-_FN5qKOUzRZ4',
+  //       apiKey: 'AIzaSyDvpzD1mTGe2rRG5ddVYUZt3BmJRnbq5HI',
   //       mode: Mode.overlay, // Mode.fullscreen
   //       language: "vn",
   //       onError: (value) => print(value.status),
@@ -305,7 +315,7 @@ class MapSuportState extends State<MapSuport> {
     if (p != null) {
       // get detail (lat/lng)
       GoogleMapsPlaces _places = GoogleMapsPlaces(
-        apiKey: 'AIzaSyA09eMUuqRfjv3n269vbf-_FN5qKOUzRZ4',
+        apiKey: 'AIzaSyDvpzD1mTGe2rRG5ddVYUZt3BmJRnbq5HI',
         apiHeaders: await GoogleApiHeaders().getHeaders(),
       );
       PlacesDetailsResponse detail =
@@ -335,7 +345,7 @@ class MapSuportState extends State<MapSuport> {
     }
 
     await route.drawRoute(latLen, 'Test routes', Color.fromRGBO(234, 51, 18, 1),
-        'AIzaSyA09eMUuqRfjv3n269vbf-_FN5qKOUzRZ4',
+        'AIzaSyDvpzD1mTGe2rRG5ddVYUZt3BmJRnbq5HI',
         travelMode: TravelModes.driving);
     setState(() {
       totalDistance =

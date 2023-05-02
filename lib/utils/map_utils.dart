@@ -22,7 +22,7 @@ class MapUtils {
     Logger().e('message');
     // Logger().e(markers);
     final places =
-        GoogleMapsPlaces(apiKey: 'AIzaSyA09eMUuqRfjv3n269vbf-_FN5qKOUzRZ4');
+        GoogleMapsPlaces(apiKey: 'AIzaSyDvpzD1mTGe2rRG5ddVYUZt3BmJRnbq5HI');
 
     PlacesSearchResponse _response = await places.searchNearbyWithRadius(
         Location(lat: 10.8850279, lng: 106.7828548), 1500,
