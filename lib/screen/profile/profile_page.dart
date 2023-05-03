@@ -30,7 +30,7 @@ class ProfilePage1 extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           title: const Text(
-            'Profile',
+            'Cá nhân',
             style: const TextStyle(
                 // color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class ProfilePage1 extends StatelessWidget {
               final user = userState.user;
               return ItemProfile(
                 leftIcon: Icons.person_outline,
-                label: 'Edit Profile',
+                label: 'Sửa thông tin cá nhân',
                 rightIcon: Icons.chevron_right,
                 onPress: () {
                   // Navigator.push(
@@ -149,7 +149,7 @@ class ProfilePage1 extends StatelessWidget {
           ),
           ItemProfile(
             leftIcon: Icons.mode_of_travel,
-            label: 'Address',
+            label: 'Địa chỉ',
             rightIcon: Icons.chevron_right,
             onPress: () {
               // Navigator.pushNamed(context, Routes.chooseAddress);
@@ -162,7 +162,7 @@ class ProfilePage1 extends StatelessWidget {
           ),
           ItemProfile(
             leftIcon: Icons.emoji_transportation,
-            label: 'Manage Trip',
+            label: 'Quản lý chuyến đi',
             rightIcon: Icons.chevron_right,
             onPress: () {
               Navigator.pushNamed(context, Routes.manageTrips);
@@ -186,7 +186,7 @@ class ProfilePage1 extends StatelessWidget {
           // ),
           ItemProfile(
             leftIcon: Icons.lock_outline,
-            label: 'Privacy Police',
+            label: 'Chính sách',
             rightIcon: Icons.chevron_right,
             onPress: () async {
               final Uri _url = Uri.parse(
@@ -198,7 +198,7 @@ class ProfilePage1 extends StatelessWidget {
           ),
           ItemProfile(
             leftIcon: Icons.help_outline,
-            label: 'Help Center',
+            label: 'Trung tâm trợ giúp',
             rightIcon: Icons.chevron_right,
             onPress: () {
               // Navigator.push(
@@ -210,7 +210,7 @@ class ProfilePage1 extends StatelessWidget {
           ),
           ItemProfile(
             leftIcon: Icons.logout,
-            label: 'Sign out',
+            label: 'Đăng xuất',
             rightIcon: Icons.chevron_right,
             onPress: () {
               AuthRepository().signOut();

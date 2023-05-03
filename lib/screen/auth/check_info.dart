@@ -106,22 +106,24 @@ class _MainPageContentState extends State<MainPageContent>
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message_rounded),
-            label: 'Chat',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_sharp),
-            label: 'Favorite',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: '',
           ),
         ],
         type: BottomNavigationBarType.fixed,

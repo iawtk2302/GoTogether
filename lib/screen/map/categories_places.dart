@@ -8,12 +8,12 @@ class CategoriesPlaces extends StatelessWidget {
   final categories = [
     {
       "icon": Icons.restaurant,
-      'place': 'Restaurants',
+      'place': 'Nhà hàng',
       "value": 'restaurant'
     },
     {
       "icon": Icons.hotel,
-      'place': 'Hotels',
+      'place': 'Khách sạn',
       "value": 'lodging'
     },
     {
@@ -23,7 +23,7 @@ class CategoriesPlaces extends StatelessWidget {
     },
     {
       "icon": Icons.local_gas_station_rounded,
-      'place': 'Fuel',
+      'place': 'Cây xăng',
       'value': 'gas_station'
     },
   ];

@@ -22,6 +22,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     if (state is FavoriteLoading) {
       emit(FavoriteLoaded(trips: []));
     }
+    print(FirebaseUtil.currentUser!.uid);
     final data = await FirebaseFirestore.instance
         .collection('Favorite')
         .where("idUser", isEqualTo: FirebaseUtil.currentUser!.uid)

@@ -86,7 +86,7 @@ final _queryController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Search",buildContext: widget.buildContext,),
+      appBar: CustomAppBar(title: "Tìm kiếm",buildContext: widget.buildContext,),
       body: Column(   
         children: [
           Padding(
@@ -103,7 +103,7 @@ final _queryController = TextEditingController();
                   onChanged: query,
                   decoration: InputDecoration(
                     border: InputBorder.none,                
-                    hintText: "Search",
+                    hintText: "Tìm kiếm",
                     fillColor: CustomColor.blue1,
                     filled: true,
                     suffixIcon: Icon(Icons.menu),

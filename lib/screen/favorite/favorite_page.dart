@@ -31,7 +31,7 @@ class _FavoritePageState extends State<FavoritePage> {
           elevation: 0,
           centerTitle: true,
           title: Text(
-            'Favorite',
+            'Yêu thích',
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -40,6 +40,7 @@ class _FavoritePageState extends State<FavoritePage> {
             if (state is FavoriteLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is FavoriteLoaded) {
+              print(state.trips.length);
               return ListView.builder(
                   itemCount: state.trips.length,
                   itemBuilder: (context, index) =>

@@ -54,10 +54,10 @@ class _ChatPageState extends State<ChatPage> {
                             unselectedLabelColor: CustomColor.grey,
                             tabs: [
                               Tab(
-                                text: "Message",
+                                text: "Tin nhắn",
                               ),
                               Tab(
-                                text: "Group",
+                                text: "Nhóm",
                               ),
                             ],
                           ),

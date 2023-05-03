@@ -87,7 +87,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColor.bg,
-      appBar: CustomAppBar(title: "Create Your Trip"),
+      appBar: CustomAppBar(title: "Tạo chuyến đi"),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : SafeArea(
@@ -163,7 +163,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton2(
                                   hint: Text(
-                                    'Select Destination',
+                                    'Chọn nơi đến',
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: CustomColor.grey,
@@ -209,7 +209,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                                 left: 0,
                                 top: 10,
                                 child: Text(
-                                  "Destination",
+                                  "Nơi đến",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -224,8 +224,8 @@ class _CreateTripPageState extends State<CreateTripPage> {
                     ),
                     CustomTextFormField(
                       textEditingController: _titleController,
-                      title: "Titile",
-                      hint: "Your trip title",
+                      title: "Tiêu đề",
+                      hint: "Tiêu đề chuyến đi",
                     ),
                     // SizedBox(height: 10,),
 
@@ -268,7 +268,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Departure",
+                                        "Ngày bắt đầu",
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
@@ -310,7 +310,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("Return",
+                                      Text("Ngày kết thúc",
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
@@ -357,7 +357,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Participant",
+                                  "Số thành viên",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14,
@@ -366,7 +366,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                                 SizedBox(
                                   height: 4,
                                 ),
-                                Text("$quantity people",
+                                Text("$quantity người",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 16)),
@@ -415,30 +415,16 @@ class _CreateTripPageState extends State<CreateTripPage> {
                       height: 130,
                       minLines: 6,
                       maxLines: 8,
-                      title: "Description",
-                      hint: "Descripe your trip",
+                      title: "Mô tả",
+                      hint: "Thêm mô tả cho chuyến đi của bạn",
                     ),
                     SizedBox(
                       height: 30,
                     ),
-                    CustomButton(onPressed: CreateTrip, text: "Create"),
+                    CustomButton(onPressed: CreateTrip, text: "Tạo"),
                     SizedBox(
                       height: 30,
                     ),
-
-                    TextButton(
-                        onPressed: () {
-                          showDialog(
-                              barrierDismissible: false,
-                              barrierColor: Colors.black.withOpacity(0.7),
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                  contentPadding: EdgeInsets.zero,
-                                  elevation: 0,
-                                  backgroundColor: Colors.transparent,
-                                  content: MyLoading()));
-                        },
-                        child: Text('aaa'))
                   ],
                 ),
               )),
@@ -558,13 +544,14 @@ class _CreateTripPageState extends State<CreateTripPage> {
   }
 
   CreateTrip() async {
+    FocusScope.of(context).unfocus();
     if (_file == null) {
       AwesomeDialog(
         context: context,
         dialogType: DialogType.error,
         animType: AnimType.scale,
-        title: 'Error Trip Photo',
-        desc: 'You have not selected a trip photo',
+        title: 'Lỗi ảnh',
+        desc: 'Bạn chưa thêm ảnh cho chuyến đi',
         btnCancelOnPress: () {},
       ).show();
       return;
@@ -579,12 +566,22 @@ class _CreateTripPageState extends State<CreateTripPage> {
         context: context,
         dialogType: DialogType.error,
         animType: AnimType.scale,
-        title: 'Error Time Of Trip',
-        desc: 'Time of trip conflict with other trip',
+        title: 'Lỗi thời gian',
+        desc: 'Thời gian chuyến đi trùng với một chuyến đi khác của bạn',
         btnCancelOnPress: () {},
       ).show();
       return;
     }
+
+    showDialog(
+        barrierDismissible: false,
+        barrierColor: Colors.black.withOpacity(0.7),
+        context: context,
+        builder: (context) => AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: MyLoading()));
 
     final listActivities = [];
 
@@ -619,6 +616,8 @@ class _CreateTripPageState extends State<CreateTripPage> {
         "idTrip": value.id,
         "image": linkImage,
       });
+      Navigator.pop(context);
+
       await ChatRepository().CreateGroupChannel(
           context: context,
           idTrip: value.id,
@@ -628,8 +627,8 @@ class _CreateTripPageState extends State<CreateTripPage> {
         context: context,
         dialogType: DialogType.success,
         animType: AnimType.scale,
-        title: 'Creation Success!',
-        desc: 'The trip has been created successfully',
+        title: 'Tạo thành công!',
+        desc: 'Chuyến đi của bạn đã được tạo thành công',
         btnOkOnPress: () {},
       ).show();
       clear();

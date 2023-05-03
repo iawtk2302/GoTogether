@@ -70,7 +70,7 @@ void _showFilterBottomSheet(BuildContext context) {
                   ),
                 ),
                 SizedBox(height: 5,),
-                Text("Filter",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600, ),),
+                Text("Lọc",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600, ),),
                 SizedBox(height: 15,),
                 InkWell(
                         splashColor: Colors.transparent,
@@ -108,7 +108,7 @@ void _showFilterBottomSheet(BuildContext context) {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Departure",
+                                          "Ngày bắt đầu",
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
@@ -150,7 +150,7 @@ void _showFilterBottomSheet(BuildContext context) {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Return",
+                                        Text("Ngày kết thúc",
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
@@ -195,7 +195,7 @@ void _showFilterBottomSheet(BuildContext context) {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Participant",
+                                    "Số thành viên",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14,
@@ -204,7 +204,7 @@ void _showFilterBottomSheet(BuildContext context) {
                                   SizedBox(
                                     height: 4,
                                   ),
-                                  Text("$quantity people",
+                                  Text("$quantity người",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 16)),
@@ -242,7 +242,7 @@ void _showFilterBottomSheet(BuildContext context) {
                         ),),
                         SizedBox(height: 15,),
                             CustomButton(
-                        text: "Apply",
+                        text: "Áp dụng",
                 // child: Text('Áp dụng bộ lọc'),
                 // trailing: Icon(Icons.check),
                 onPressed: () async{
@@ -293,7 +293,7 @@ void _showFilterBottomSheet(BuildContext context) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Search"),
+      appBar: CustomAppBar(title: "Tìm kiếm"),
       body: BlocBuilder<SearchFilterTripBloc, SearchFilterTripState>(
         builder: (context, state) {
           if(state is SearchLoading){
@@ -329,7 +329,7 @@ void _showFilterBottomSheet(BuildContext context) {
             focusNode: focusNode,
             decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter a province name",
+                          hintText: "Nhập tên tỉnh",
                           fillColor: CustomColor.blue1,
                           filled: true,
                           suffixIcon: IconButton(icon:Icon(Icons.menu),onPressed: () => _showFilterBottomSheet(context),),

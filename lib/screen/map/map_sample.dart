@@ -218,7 +218,7 @@ class MapSuportState extends State<MapSuport> {
             Marker(
               markerId: MarkerId((markerId).toString()),
               position: LatLng(argument.latitude, argument.longitude),
-              icon: widget.icon,
+              // icon: widget.icon,
             ),
           );
         });

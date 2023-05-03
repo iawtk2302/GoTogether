@@ -22,7 +22,9 @@ class TripActiveTab extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is ManageTripLoaded) {
                 List<Trip> displayList = state.trips
-                    .where((element) => element.status == 'pending' || element.status == 'start')
+                    .where((element) =>
+                        element.status == 'pending' ||
+                        element.status == 'start')
                     .toList();
                 return ListView.separated(
                   itemCount: displayList.length,

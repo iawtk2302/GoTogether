@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white),
                         ),
                         Text(
-                          'Find in minute',
+                          'Đi muôn nơi',
                           style: TextStyle(
                               // fontWeight: FontWeight.w600,
                               // fontSize: 18,
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                               cursorColor: CustomColor.blue,
                               enabled: false,
                               decoration: InputDecoration(
-                                hintText: 'Search location',
+                                hintText: 'Tìm địa điểm',
                                 hintStyle: TextStyle(fontSize: 12),
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
