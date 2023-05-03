@@ -17,8 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-@override
+  @override
   void initState() {
     ChatUtil.initChat();
     super.initState();
@@ -72,9 +71,13 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(
                             left: 8.0, right: 4, top: 4, bottom: 4),
                         child: Row(children: [
-                           IconButton(icon:Icon(Icons.notifications, color: Colors.white),onPressed:() {
-                            Navigator.pushNamed(context, Routes.notification);
-                          },),
+                          IconButton(
+                            icon:
+                                Icon(Icons.notifications, color: Colors.white),
+                            onPressed: () {
+                              Navigator.pushNamed(context, Routes.notification);
+                            },
+                          ),
                           const SizedBox(
                             width: 16,
                           ),
@@ -126,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                           child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children:  [
+                        children: [
                           Icon(
                             Icons.arrow_circle_right_rounded,
                             color: CustomColor.blue,
@@ -136,13 +139,15 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Expanded(
                               child: InkWell(
-                                onTap: (){
-                                  Navigator.pushNamed(context, Routes.search);
-                                },
-                                child: TextField(
-                                                          cursorColor: CustomColor.blue,
-                                                          enabled: false,
-                                                          decoration: InputDecoration(
+                            onTap: () {
+                              BlocProvider.of<HomeBloc>(context).add(HomeLoadEvent());
+
+                              Navigator.pushNamed(context, Routes.search);
+                            },
+                            child: TextField(
+                              cursorColor: CustomColor.blue,
+                              enabled: false,
+                              decoration: InputDecoration(
                                 hintText: 'Search location',
                                 hintStyle: TextStyle(fontSize: 12),
                                 enabledBorder: UnderlineInputBorder(
@@ -151,9 +156,9 @@ class _HomePageState extends State<HomePage> {
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: CustomColor.blue, width: 1)),
-                                                          ),
-                                                        ),
-                              )),
+                              ),
+                            ),
+                          )),
                         ],
                       ))
                     ]),

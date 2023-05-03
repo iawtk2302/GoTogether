@@ -8,8 +8,8 @@ import 'package:go_together/utils/firebase_utils.dart';
 import '../../bloc/manage_trip/manage_trip_bloc.dart';
 import '../../model/trip.dart';
 
-class TripActiveTab extends StatelessWidget {
-  const TripActiveTab({super.key});
+class TripCancelTab extends StatelessWidget {
+  const TripCancelTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TripActiveTab extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is ManageTripLoaded) {
                 List<Trip> displayList = state.trips
-                    .where((element) => element.status == 'pending' || element.status == 'start')
+                    .where((element) => element.status == 'canceled')
                     .toList();
                 return ListView.separated(
                   itemCount: displayList.length,

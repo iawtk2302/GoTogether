@@ -30,6 +30,7 @@ class MapSupportUpdatePositionToFirebase extends MapSupportEvent {
   final String idTrip;
 
   const MapSupportUpdatePositionToFirebase( {required this.latLng, required this.idTrip});
+  
   @override
   List<Object> get props => [latLng, idTrip];
 }

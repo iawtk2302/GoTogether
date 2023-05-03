@@ -8,7 +8,8 @@ import 'package:go_together/screen/home_page.dart';
 import 'package:go_together/screen/profile_page.dart';
 import 'package:go_together/screen/chat/chat_message_page.dart';
 import '../chat/chat_page.dart';
-import '../favorite_page.dart';
+import '../favorite/favorite_page.dart';
+import '../profile/profile_page.dart';
 
 
 
@@ -107,7 +108,7 @@ class _MainPageContentState extends State<MainPageContent>
           child: TabBarView(
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
-            children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage()],
+            children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage1()],
           )),
     );
   }
