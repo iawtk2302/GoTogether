@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_together/widget/loading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../bloc/user/user_bloc.dart';
@@ -56,8 +57,9 @@ class ProfilePage1 extends StatelessWidget {
                           height: 120,
                           width: 120,
                           child: CircleAvatar(
-                            backgroundImage:
-                                CachedNetworkImageProvider(state.user.image!, scale: 1),
+                            backgroundImage: CachedNetworkImageProvider(
+                                state.user.image!,
+                                scale: 1),
                           ),
                         ),
                         // Positioned(
@@ -133,6 +135,14 @@ class ProfilePage1 extends StatelessWidget {
                   //     MaterialPageRoute(
                   //       builder: (context) => UpdateProfile(user: user),
                   //     ));
+
+                  showDialog(
+                    barrierColor : Colors.black.withOpacity(0.7),
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        content: MyLoading()));
                 },
               );
             },

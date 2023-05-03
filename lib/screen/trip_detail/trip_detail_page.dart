@@ -224,10 +224,10 @@ class TripDetailPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(trip.destination),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 8.0),
+        //   child: Text(trip.destination),
+        // ),
       ],
     );
   }
@@ -259,6 +259,7 @@ class TripDetailPage extends StatelessWidget {
                     : Wrap(
                         alignment: WrapAlignment.start,
                         crossAxisAlignment: WrapCrossAlignment.start,
+                        runAlignment: WrapAlignment.start,
                         children: List.generate(
                           trip.activities.length,
                           (index) => _buttonActivity(trip.activities[index],
@@ -420,7 +421,7 @@ class TripDetailPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                trip.description,
+                trip.destination,
               )
             ],
           ),

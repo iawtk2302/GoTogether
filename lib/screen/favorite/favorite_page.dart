@@ -139,15 +139,18 @@ Widget _itemTripManage(BuildContext context, Trip trip) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          trip.description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        Expanded(
+                          child: Text(
+                            trip.description,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
                             trip.dateStart.toDate().toDateMiniTripFormat(),
+                            style: TextStyle(fontSize: 12),
                           ),
                         )
                       ],

@@ -6,6 +6,7 @@ import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/screen/auth/fill_profile_page.dart';
 import 'package:go_together/screen/home_page.dart';
 import 'package:go_together/screen/profile_page.dart';
+import 'package:go_together/widget/loading.dart';
 import '../../utils/chatUtils.dart';
 import '../chat/chat_page.dart';
 import '../favorite/favorite_page.dart';
@@ -33,7 +34,7 @@ class _CheckInfoPageState extends State<CheckInfoPage> {
       body: BlocBuilder<UserBloc,UserState>(
         builder: (BuildContext context, state) { 
           if (state is UserLoading){
-            return Center(child: CircularProgressIndicator());
+            return Center(child: MyLoading());
           }
           else if(state is UserExist){
             return MainPageContent();

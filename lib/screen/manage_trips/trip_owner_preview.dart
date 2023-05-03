@@ -118,7 +118,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           _buildActivities(),
           const SizedBox(height: 26),
           const CustomMediumDivider(),
-          // _buildMap(),
+          _buildMap(),
           const SizedBox(height: 26),
           const CustomMediumDivider(),
           Image.asset(
@@ -309,10 +309,10 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           ),
         ),
         const SizedBox(height: 6),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(widget.trip.destination),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 8.0),
+        //   child: Text(widget.trip.destination),
+        // ),
       ],
     );
   }
@@ -453,7 +453,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
               ),
               SizedBox(height: 8),
               Text(
-                widget.trip.description,
+                widget.trip.destination,
               )
             ],
           ),

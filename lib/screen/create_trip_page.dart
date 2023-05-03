@@ -18,6 +18,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
+import '../widget/loading.dart';
+
 class CreateTripPage extends StatefulWidget {
   const CreateTripPage({super.key});
 
@@ -423,6 +425,20 @@ class _CreateTripPageState extends State<CreateTripPage> {
                     SizedBox(
                       height: 30,
                     ),
+
+                    TextButton(
+                        onPressed: () {
+                          showDialog(
+                              barrierDismissible: false,
+                              barrierColor: Colors.black.withOpacity(0.7),
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                  contentPadding: EdgeInsets.zero,
+                                  elevation: 0,
+                                  backgroundColor: Colors.transparent,
+                                  content: MyLoading()));
+                        },
+                        child: Text('aaa'))
                   ],
                 ),
               )),
@@ -584,21 +600,30 @@ class _CreateTripPageState extends State<CreateTripPage> {
       "dateEnd": _dates[1],
       "quantity": quantity,
       "description": _descriptionController.text.trim(),
-      "members": [{
-        "idUser":FirebaseUtil.currentUser!.uid,
-        "image":FirebaseUtil.currentUser!.photoURL,
-        "lat":"",
-        "lng":""
-      }],
+      "members": [
+        {
+          "idUser": FirebaseUtil.currentUser!.uid,
+          "image": FirebaseUtil.currentUser!.photoURL,
+          "lat": "",
+          "lng": ""
+        }
+      ],
       "status": "pending",
       "activities": listActivities,
       "idCreator": FirebaseUtil.currentUser!.uid,
-      "membersId":[FirebaseUtil.currentUser!.uid],
+      "membersId": [FirebaseUtil.currentUser!.uid],
     }).then((value) async {
       final task = await storage.child("${value.id}.jpg").putFile(_file!);
       final linkImage = await task.ref.getDownloadURL();
-      trips.doc(value.id).update({"idTrip": value.id, "image": linkImage,});
-      await ChatRepository().CreateGroupChannel(context: context,idTrip: value.id,image: linkImage,title: _titleController.text.trim().toString());
+      trips.doc(value.id).update({
+        "idTrip": value.id,
+        "image": linkImage,
+      });
+      await ChatRepository().CreateGroupChannel(
+          context: context,
+          idTrip: value.id,
+          image: linkImage,
+          title: _titleController.text.trim().toString());
       AwesomeDialog(
         context: context,
         dialogType: DialogType.success,

@@ -53,31 +53,41 @@ class ItemTrip extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 6),
+              padding: const EdgeInsets.only(top: 6, left: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    trip.destination,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    children: const [Icon(Icons.star), Text('4.1')],
+                    trip.title,
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 2),
-              child: Text(
-                'Cách 1 km',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
+            Padding(
+              padding: EdgeInsets.only(top: 2, left: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // const Icon(Icons.location_on_outlined),
+                  Text(
+                    trip.destination.toString(),
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  )
+                ],
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 2),
+            //   child: Text(
+            //     trip.description,
+            //     style: TextStyle(
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            // ),
             Padding(
-              padding: const EdgeInsets.only(top: 2),
+              padding: const EdgeInsets.only(top: 2, left: 8),
               child: Text(
                 trip.dateStart.toDate().toHighlightFormat(),
                 style: TextStyle(
