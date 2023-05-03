@@ -1,15 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/router/routes.dart';
 import 'package:go_together/utils/date_time_utils.dart';
 import 'package:go_together/utils/firebase_utils.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../bloc/manage_trip/manage_trip_bloc.dart';
+import '../../bloc/map_support/map_support_bloc.dart';
 import '../../model/trip.dart';
+import '../map/map_sample.dart';
 
-class TripActiveTab extends StatelessWidget {
-  const TripActiveTab({super.key});
+class TripOwnTab extends StatelessWidget {
+  const TripOwnTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,8 @@ class TripActiveTab extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is ManageTripLoaded) {
                 List<Trip> displayList = state.trips
-                    .where((element) => element.status == 'pending' || element.status == 'start')
+                    .where((element) =>
+                        element.idCreator == FirebaseUtil.currentUser!.uid)
                     .toList();
                 return ListView.separated(
                   itemCount: displayList.length,
@@ -44,13 +49,25 @@ class TripActiveTab extends StatelessWidget {
 
   Widget _itemTripManage(BuildContext context, Trip trip) {
     return InkWell(
-      onTap: () {
-        if (trip.idCreator == FirebaseUtil.currentUser!.uid) {
+      onTap: () async {
+        // if (trip.status == 'start') {
+        //   BlocProvider.of<MapSupportBloc>(context)
+        //       .add(MapSupportLoadMembersEvent(idTrip: trip.idTrip));
+        //   BitmapDescriptor icon = await MarkerIcon.downloadResizePictureCircle(
+        //       FirebaseUtil.currentUser!.photoURL!,
+        //       size: 100);
+        //   // ignore: use_build_context_synchronously
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //           builder: (context) => MapSuport(
+        //                 icon: icon,
+        //                 trip: trip,
+        //               )));
+        // } else {
           Navigator.pushNamed(context, Routes.tripOwnerPreview,
               arguments: trip);
-        } else {
-          Navigator.pushNamed(context, Routes.tripDetail, arguments: trip);
-        }
+        // }
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

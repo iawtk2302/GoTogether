@@ -4,7 +4,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/manage_trip/manage_trip_bloc.dart';
+import 'package:go_together/screen/manage_trips/own_trip_tab.dart';
 import 'package:go_together/screen/manage_trips/trip_active_tab.dart';
+
+import 'trip_cancel_tab.dart';
 
 class ManageTripsPage extends StatefulWidget {
   const ManageTripsPage({super.key});
@@ -47,9 +50,9 @@ class _ManageTripsPageState extends State<ManageTripsPage> {
             labelColor: Colors.black,
             labelStyle: TextStyle(fontSize: 16),
             tabs: [
-              Tab(text: 'Đang đi'),
+              Tab(text: 'Hoạt động'),
               Tab(
-                text: 'Chờ',
+                text: 'Của bạn',
               ),
               Tab(
                 text: 'Đã hủy',
@@ -65,12 +68,8 @@ class _ManageTripsPageState extends State<ManageTripsPage> {
             // OrderCompleted(),
             // OrderCanceled(),
             TripActiveTab(),
-            Center(
-              child: Text('aa'),
-            ),
-            Center(
-              child: Text('aa'),
-            ),
+            TripOwnTab(),
+            TripCancelTab(),
           ],
         ),
       ),

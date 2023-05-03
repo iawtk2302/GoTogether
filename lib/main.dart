@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_together/bloc/favorite/favorite_bloc.dart';
 import 'package:go_together/bloc/home/home_bloc.dart';
 import 'package:go_together/bloc/manage_trip/manage_trip_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
@@ -116,7 +117,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => SearchFilterTripBloc()),
         BlocProvider(create: (_) => HomeBloc()..add(HomeLoadEvent())),
         BlocProvider(create: (context) => MapSupportBloc()),
-        BlocProvider(create: (context) => ManageTripBloc())
+        BlocProvider(create: (context) => ManageTripBloc()),
+        BlocProvider(create: (context) => FavoriteBloc()..add(FavoriteLoadEvent()))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

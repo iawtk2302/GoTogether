@@ -1,8 +1,13 @@
+import 'dart:ffi';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_together/model/trip.dart';
 import 'package:go_together/router/routes.dart';
+import 'package:go_together/utils/firebase_utils.dart';
 import 'package:go_together/utils/utils.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 class ItemTrip extends StatelessWidget {
   const ItemTrip({
@@ -42,21 +47,7 @@ class ItemTrip extends StatelessWidget {
                   Positioned(
                     right: 10,
                     top: 10,
-                    child: Material(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(20),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.favorite_border,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onTap: () {},
-                      ),
-                    ),
+                    child: IconFavorite(trip: trip),
                   )
                 ],
               ),
@@ -96,6 +87,85 @@ class ItemTrip extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class IconFavorite extends StatefulWidget {
+  const IconFavorite({
+    super.key,
+    required this.trip,
+  });
+
+  final Trip trip;
+
+  @override
+  State<IconFavorite> createState() => _IconFavoriteState();
+}
+
+class _IconFavoriteState extends State<IconFavorite> {
+  bool isFavorite = false;
+  String id = '';
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('Favorite')
+                  .where("idUser", isEqualTo: FirebaseUtil.currentUser!.uid)
+                  .where("idTrip", isEqualTo: widget.trip.idTrip)
+                  .get(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Icon(
+                    Icons.favorite_border,
+                    color: Colors.white,
+                  );
+                }
+                isFavorite = snapshot.data!.docs.isNotEmpty;
+                if (isFavorite) {
+                  id = snapshot.data!.docs.first.id;
+                }
+                return Icon(
+                  !isFavorite ? Icons.favorite_border : Icons.favorite,
+                  color: Colors.white,
+                );
+              }),
+        ),
+        onTap: () async {
+          // final data = await FirebaseFirestore.instance
+          //     .collection('Favorite')
+          //     .where("idUser", isEqualTo: FirebaseUtil.currentUser!.uid)
+          //     .where("idTrip", isEqualTo: widget.trip.idTrip)
+          //     .get();
+          if (!isFavorite) {
+            final uuid = Uuid();
+            final id = uuid.v1();
+            await FirebaseFirestore.instance
+                .collection('Favorite')
+                .doc(id)
+                .set({
+              "idFavorite": id,
+              "idUser": FirebaseUtil.currentUser!.uid,
+              "idTrip": widget.trip.idTrip
+            });
+          } else {
+            await FirebaseFirestore.instance
+                .collection('Favorite')
+                .doc(id)
+                .delete();
+          }
+          setState(() {
+            isFavorite = !isFavorite;
+          });
+        },
       ),
     );
   }

@@ -11,7 +11,12 @@ class ManageTripLoadEvent extends ManageTripEvent {
   final String idUser;
 
   const ManageTripLoadEvent({required this.idUser});
+}
 
+class ManageTripUpdateEvent extends ManageTripEvent {
+  final List<Trip> trips;
+
+  const ManageTripUpdateEvent({required this.trips});
   @override
-  List<Object> get props => [idUser];
+  List<Object> get props => [trips];
 }

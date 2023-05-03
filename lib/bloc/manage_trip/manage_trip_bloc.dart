@@ -13,19 +13,27 @@ part 'manage_trip_state.dart';
 class ManageTripBloc extends Bloc<ManageTripEvent, ManageTripState> {
   ManageTripBloc() : super(ManageTripLoading()) {
     on<ManageTripLoadEvent>(_loadTrips);
+    on<ManageTripUpdateEvent>(_update);
   }
 
   _loadTrips(ManageTripLoadEvent event, Emitter<ManageTripState> emit) async {
     Logger().v(FirebaseAuth.instance.currentUser!.uid);
     List<Trip> trips = [];
-    final snapshot = await FirebaseFirestore.instance
+    loadMyOrder().listen((event) => add(ManageTripUpdateEvent(trips: event)));
+  }
+
+  Stream<List<Trip>> loadMyOrder() {
+    return FirebaseFirestore.instance
         .collection('Trip')
         .where('membersId',
             arrayContains: FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    // print('Query: ${snapshot.qu.toString()}');
-    trips = snapshot.docs.map((e) => Trip.fromJson(e.data())).toList();
+        .snapshots()
+        .map((event) {
+      return event.docs.map((e) => Trip.fromJson(e.data())).toList();
+    });
+  }
 
-    emit(ManageTripLoaded(trips: trips));
+  _update(ManageTripUpdateEvent event, Emitter<ManageTripState> emit) {
+    emit(ManageTripLoaded(trips: event.trips));
   }
 }

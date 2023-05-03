@@ -8,7 +8,8 @@ import 'package:go_together/screen/home_page.dart';
 import 'package:go_together/screen/profile_page.dart';
 import '../../utils/chatUtils.dart';
 import '../chat/chat_page.dart';
-import '../favorite_page.dart';
+import '../favorite/favorite_page.dart';
+import '../profile/profile_page.dart';
 
 
 
@@ -129,13 +130,13 @@ class _MainPageContentState extends State<MainPageContent>
         onTap: _onItemTapped,
       ),
       body: DefaultTabController(
-              length: 4,
-              initialIndex: 0,
-              child:  TabBarView(
-                  controller: _tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage()],
-              )),
+          length: 4,
+          initialIndex: 0,
+          child: TabBarView(
+            controller: _tabController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage1()],
+          )),
     );
   }
 }

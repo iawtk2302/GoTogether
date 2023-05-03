@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/model/custom_user.dart';
 import 'package:go_together/model/trip.dart';
@@ -15,14 +17,16 @@ import 'package:go_together/widget/custom_button.dart';
 import 'package:go_together/widget/custom_medium_divider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../bloc/map_support/map_support_bloc.dart';
 import '../../model/notification.dart';
+import '../map/map_sample.dart';
 
 class TripDetailPage extends StatelessWidget {
   TripDetailPage({super.key, required this.trip});
 
   final Trip trip;
 
-  final Completer<GoogleMapController> _controller = Completer();
+  // final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(10.874327, 106.7992051),
@@ -107,8 +111,10 @@ class TripDetailPage extends StatelessWidget {
               ),
             ]),
           ),
-          if (FirebaseUtil.currentUser!.uid != trip.idCreator)
-            _buildButtonRequest()
+          if (FirebaseUtil.currentUser!.uid != trip.idCreator &&
+              trip.status == 'pending')
+            _buildButtonRequest(),
+          if (trip.status == 'start') _buildButtonGo(context)
         ],
       ),
     );
@@ -166,6 +172,40 @@ class TripDetailPage extends StatelessWidget {
         ));
   }
 
+  Positioned _buildButtonGo(context) {
+    return Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: Container(
+          color: Colors.transparent,
+          height: 70,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+            child: CustomButton(
+              onPressed: () async {
+                BlocProvider.of<MapSupportBloc>(context)
+                    .add(MapSupportLoadMembersEvent(idTrip: trip.idTrip));
+                BitmapDescriptor icon =
+                    await MarkerIcon.downloadResizePictureCircle(
+                        FirebaseUtil.currentUser!.photoURL!,
+                        size: 100);
+                // ignore: use_build_context_synchronously
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MapSuport(
+                              icon: icon,
+                              trip: trip,
+                            )));
+              },
+              text: 'Go',
+              color: Colors.green[500],
+            ),
+          ),
+        ));
+  }
+
   Column _buildMap() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +217,7 @@ class TripDetailPage extends StatelessWidget {
             mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
             onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
+              // _controller.complete(controller);
             },
             onTap: (argument) {},
             // markers: markers,
