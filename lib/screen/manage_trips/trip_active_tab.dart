@@ -78,8 +78,9 @@ class TripActiveTab extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CachedNetworkImage(imageUrl: trip.image),
+                child: CachedNetworkImage(imageUrl: trip.image, width: 100,),
               ),
+              SizedBox(width: 6,),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8, right: 8),
@@ -90,9 +91,13 @@ class TripActiveTab extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            trip.title,
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                          Expanded(
+                            child: Text(
+                              trip.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
                           ),
                           Text(
                             trip.dateStart.toDate().toDateMiniTripFormat(),

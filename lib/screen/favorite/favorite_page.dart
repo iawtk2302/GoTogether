@@ -97,6 +97,9 @@ Widget _itemTripManage(BuildContext context, Trip trip) {
                 ),
               ),
             ),
+            SizedBox(
+              width: 6,
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8, right: 8),
@@ -107,9 +110,13 @@ Widget _itemTripManage(BuildContext context, Trip trip) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          trip.title,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                        Expanded(
+                          child: Text(
+                            trip.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
                         ),
                         InkWell(
                           onTap: () async {

@@ -450,19 +450,22 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.trip.title,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 8),
-              Text(
-                widget.trip.destination,
-              )
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.trip.title,
+                  maxLines: 2,
+                  style:
+                      const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  widget.trip.destination,
+                )
+              ],
+            ),
           ),
           FutureBuilder(
               future: FirebaseFirestore.instance
