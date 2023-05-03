@@ -25,6 +25,8 @@ class ChatRepository{
     Future<void> AddMember({required MyNotification myNotification})async{
       final client = ChatUtil.client;
       final channel = client.channel("group", id: myNotification.idTrip);
+      await channel.watch();
       await channel.addMembers([myNotification.idSender]);
+      print(channel.cid);
     }
 }

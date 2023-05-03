@@ -76,7 +76,7 @@ class ItemNotification extends StatelessWidget {
                 flex: 1,
                 child: InkWell(
                   onTap: ()async{
-                    // ChatRepository().AddMember(myNotification: notification);
+                    await ChatRepository().AddMember(myNotification: notification);
                     await FirebaseUtil.notifications.doc(notification.idNoti).update({
                       "status":"accepted"
                     });
