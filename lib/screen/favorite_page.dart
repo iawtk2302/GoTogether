@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:go_together/repository/notification_repository.dart';
 import 'package:go_together/utils/chatUtils.dart';
 import 'package:go_together/widget/rating_dialog.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
@@ -33,15 +34,15 @@ class _FavoritePageState extends State<FavoritePage> {
     //       'https://firebasestorage.googleapis.com/v0/b/gotogether-1b01c.appspot.com/o/PX5H6QK7sIPvQNrqIZkRqdPhZxc2.jpg?alt=media&token=29b91591-8e50-496f-88e9-647185c56d3e'
     // });
     // final channel = ChatUtil.client.channel(channelType, id: channelID);
-    Future<void> CreateChannel(BuildContext context)async {
-      final client=ChatUtil.client;
-      final channel=client.channel('messaging',extraData: {
-        "members":[client.state.currentUser!.id,"khoihaycuoi"]
-      });
-      await channel.watch();
-      Navigator.pushNamed(context, Routes.channel,
-                      arguments: channel);
-    }
+    // Future<void> CreateChannel(BuildContext context)async {
+    //   final client=ChatUtil.client;
+    //   final channel=client.channel('messaging',extraData: {
+    //     "members":[client.state.currentUser!.id,"khoihaycuoi"]
+    //   });
+    //   await channel.watch();
+    //   Navigator.pushNamed(context, Routes.channel,
+    //                   arguments: channel);
+    // }
     return Scaffold(
       body: Center(
         child: SafeArea(
@@ -49,20 +50,22 @@ class _FavoritePageState extends State<FavoritePage> {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: RatingDialog(),
-                        );
-                      },
-                    );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) {
+                    //     return Dialog(
+                    //       child: RatingDialog(),
+                    //     );
+                    //   },
+                    // );
+                    NotificationRepository().isAllow();
                   },
                   child: Text("haha")),
               ElevatedButton(
                 child: Text('Favorite'),
                 onPressed: () async {
-                  CreateChannel(context);
+                  // NotificationRepository().createNotification();
+                  // CreateChannel(context);
                   //       final channel = ChatUtil.client.channel('messaging',extraData: {
                   //   "name": "xin chao 2",
                   //   "image": "https://khoinguonsangtao.vn/wp-content/uploads/2022/08/hinh-anh-naruto-1.jpg",

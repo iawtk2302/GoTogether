@@ -116,6 +116,9 @@ final _queryController = TextEditingController();
           Expanded(
             child: StreamChannelListView(    
               controller: _listController,
+              emptyBuilder: (context) {
+                return Container();
+              },
               onChannelTap: (channel) {
                 Navigator.pushNamed(widget.buildContext, Routes.channel,arguments: channel);
               },

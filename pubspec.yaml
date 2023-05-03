@@ -67,6 +67,7 @@ dependencies:
   flutter_google_places:
     git: 
       url: https://github.com/fluttercommunity/flutter_google_places.git
+  awesome_notifications: ^0.7.4+1
 
 # dependency_overrides:
 #   rxdart: ^0.26.0

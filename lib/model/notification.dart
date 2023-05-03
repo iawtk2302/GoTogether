@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class MyNotification extends Equatable{
@@ -11,6 +12,7 @@ class MyNotification extends Equatable{
         required this.title,
         required this.type,
         required this.status,
+        required this.createAt,
     });
 
     final String idNoti;
@@ -22,6 +24,7 @@ class MyNotification extends Equatable{
     final String title;
     final String type;
     final String status;
+    final Timestamp createAt;
 
     MyNotification copyWith({
         String? idNoti,
@@ -33,6 +36,7 @@ class MyNotification extends Equatable{
         String? title,
         String? type,
         String? status,
+        Timestamp? createAt
     }) => 
         MyNotification(
             idNoti: idNoti ?? this.idNoti,
@@ -44,6 +48,7 @@ class MyNotification extends Equatable{
             title: title ?? this.title,
             type: type ?? this.type,
             status: status ?? this.status,
+            createAt: createAt ?? this.createAt
         );
 
     factory MyNotification.fromJson(Map<String, dynamic> json) => MyNotification(
@@ -56,6 +61,7 @@ class MyNotification extends Equatable{
         title: json["title"],
         type: json["type"],
         status: json["status"],
+        createAt: json['createAt']
     );
 
     Map<String, dynamic> toJson() => {
@@ -68,9 +74,10 @@ class MyNotification extends Equatable{
         "title": title,
         "type": type,
         "status": status,
+        "createAt":createAt
     };
     
       @override
       // TODO: implement props
-      List<Object?> get props => [idNoti,idReceiver,idSender,idTrip,fullName,imgAva,title,type,status];
+      List<Object?> get props => [idNoti,idReceiver,idSender,idTrip,fullName,imgAva,title,type,status,createAt];
 }

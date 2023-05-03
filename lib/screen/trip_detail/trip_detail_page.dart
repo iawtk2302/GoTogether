@@ -135,7 +135,9 @@ class TripDetailPage extends StatelessWidget {
                     imgAva: FirebaseUtil.currentUser!.photoURL ?? "",
                     title: trip.title,
                     type: 'tripRequest',
-                    status: 'pending');
+                    status: 'pending',
+                    createAt: Timestamp.fromDate(DateTime.now())
+                    );
 
                 final count = await FirebaseFirestore.instance
                     .collection('Notification')

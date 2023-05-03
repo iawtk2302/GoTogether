@@ -13,7 +13,7 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  final Stream<QuerySnapshot> _notisStream = FirebaseFirestore.instance.collection('Notification').where("idReceiver",isEqualTo: FirebaseAuth.instance.currentUser!.uid).where("status",isEqualTo: "pending").snapshots();
+  final Stream<QuerySnapshot> _notisStream = FirebaseFirestore.instance.collection('Notification').where("idReceiver",isEqualTo: FirebaseAuth.instance.currentUser!.uid).orderBy("createAt",descending: true).snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

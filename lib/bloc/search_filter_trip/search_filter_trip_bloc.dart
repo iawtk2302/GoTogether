@@ -14,12 +14,27 @@ class SearchFilterTripBloc extends Bloc<SearchFilterTripEvent, SearchFilterTripS
       emit(SearchFilterTripLoaded(listTrip: []));
     });
     on<Query>((event, emit) async{
+      // emit(SearchLoading());
       final trips=FirebaseFirestore.instance.collection("Trip");
       List<Trip> temp=[];
       await trips.where("status",isEqualTo: "pending").get().then((value) {
         temp.addAll(value.docs.map((e) => Trip.fromJson(e.data())).toList());
       },);
-      List<Trip> temp2 = temp.where((element) => element.title.toLowerCase().contains(event.query.toLowerCase())).toList();
+      List<Trip> temp2 = temp.where((element) => element.destination.toLowerCase()==event.query.toLowerCase()).toList();
+      emit(SearchFilterTripLoaded(listTrip: temp2));
+    });
+    on<Filter>((event, emit) async{
+      // final trips=FirebaseFirestore.instance.collection("Trip");
+      // List<Trip> temp=[];
+      final state = this.state as SearchFilterTripLoaded;
+      // await trips.where("status",isEqualTo: "pending").get().then((value) {
+      //   temp.addAll(value.docs.map((e) => Trip.fromJson(e.data())).toList());
+      // },);
+      print(state.listTrip[0].title);
+      List<Trip> temp=List.from(state.listTrip);
+      List<Trip> temp2 = temp.where((element) {return (element.dateStart.toDate().isAfter(event.dateStart) || element.dateStart.toDate().isAtSameMomentAs(event.dateStart))
+        && (element.dateEnd.toDate().isBefore(event.dateEnd) || element.dateEnd.toDate().isAtSameMomentAs(event.dateEnd))&&element.quantity<=event.participant;}).toList();
+      // print(temp2.toString());
       emit(SearchFilterTripLoaded(listTrip: temp2));
     });
   }

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/screen/chat/chat_group_page.dart';
 import 'package:go_together/screen/chat/chat_message_page.dart';
+import 'package:go_together/utils/chatUtils.dart';
 import 'package:go_together/utils/firebase_utils.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
+import '../../repository/notification_repository.dart';
 import '../../router/routes.dart';
 
 
@@ -75,12 +78,30 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   ),
                   Expanded(
+                    child: StreamChat(
+                      client: ChatUtil.client,
+                      onBackgroundEventReceived: (event) { 
+    final currentUserId = ChatUtil.client.state.currentUser!.id; 
+    if (![ 
+          EventType.messageNew, 
+          EventType.notificationMessageNew, 
+        ].contains(event.type) || 
+        event.user!.id == currentUserId) { 
+      return; 
+    } 
+    if (event.message == null) return; 
+    
+    final message = event.message;
+    final sender = message!.user;
+    NotificationRepository().createNotification(sender!.name, message.text!);
+  },
                       child: TabBarView(
-                    children: [
-                      ChatMessagePage(buildContext: context),
-                      ChatGroupPage(buildContext: context),
-                    ],
-                  ))
+                      children: [
+                        ChatMessagePage(buildContext: context),
+                        ChatGroupPage(buildContext: context),
+                      ],
+                                      ),
+                    ))
                 ],
               ),
             ),

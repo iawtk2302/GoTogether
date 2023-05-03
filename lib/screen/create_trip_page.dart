@@ -406,7 +406,7 @@ class _CreateTripPageState extends State<CreateTripPage> {
                     ),
                     _buildActivities(),
                     SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     CustomTextFormField(
                       textEditingController: _descriptionController,
@@ -584,10 +584,16 @@ class _CreateTripPageState extends State<CreateTripPage> {
       "dateEnd": _dates[1],
       "quantity": quantity,
       "description": _descriptionController.text.trim(),
-      "members": [],
+      "members": [{
+        "idUser":FirebaseUtil.currentUser!.uid,
+        "image":FirebaseUtil.currentUser!.photoURL,
+        "lat":"",
+        "lng":""
+      }],
       "status": "pending",
       "activities": listActivities,
       "idCreator": FirebaseUtil.currentUser!.uid,
+      "membersId":[FirebaseUtil.currentUser!.uid],
     }).then((value) async {
       final task = await storage.child("${value.id}.jpg").putFile(_file!);
       final linkImage = await task.ref.getDownloadURL();

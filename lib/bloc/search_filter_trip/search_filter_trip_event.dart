@@ -19,3 +19,12 @@ class Query extends SearchFilterTripEvent {
   @override
   List<Object> get props => [query];
 }
+
+class Filter extends SearchFilterTripEvent {
+  const Filter(this.dateStart, this.dateEnd, this.participant);
+  final DateTime dateStart;
+  final DateTime dateEnd;
+  final int participant;
+  @override
+  List<Object> get props => [dateStart, dateEnd, participant];
+}

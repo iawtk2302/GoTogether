@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
 import 'package:go_together/common/custom_color.dart';
-import 'package:go_together/repository/auth_repository.dart';
+
 import 'package:go_together/screen/auth/fill_profile_page.dart';
 import 'package:go_together/screen/home_page.dart';
 import 'package:go_together/screen/profile_page.dart';
-import 'package:go_together/screen/chat/chat_message_page.dart';
+import '../../utils/chatUtils.dart';
 import '../chat/chat_page.dart';
 import '../favorite_page.dart';
+
 
 
 
@@ -55,8 +56,8 @@ class MainPageContent extends StatefulWidget {
   State<MainPageContent> createState() => _MainPageContentState();
 }
 
-class _MainPageContentState extends State<MainPageContent>
-    with SingleTickerProviderStateMixin {
+class _MainPageContentState extends State<MainPageContent> 
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   int _selectedIndex = 0;
   late TabController _tabController;
 
@@ -68,11 +69,37 @@ class _MainPageContentState extends State<MainPageContent>
   }
 
   @override
-  void initState() {
-    super.initState();
+  void initState() { 
     _tabController = TabController(length: 4, vsync: this);
+    WidgetsBinding.instance.addObserver(this);
+    ChatUtil.initChat();
+    super.initState();
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        setState(() {
+          ChatUtil.onBackground = false;
+        });
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        setState(() {
+          ChatUtil.onBackground = true;
+        });
+        break;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,13 +129,13 @@ class _MainPageContentState extends State<MainPageContent>
         onTap: _onItemTapped,
       ),
       body: DefaultTabController(
-          length: 4,
-          initialIndex: 0,
-          child: TabBarView(
-            controller: _tabController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage()],
-          )),
+              length: 4,
+              initialIndex: 0,
+              child:  TabBarView(
+                  controller: _tabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage()],
+              )),
     );
   }
 }
