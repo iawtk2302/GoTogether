@@ -1,11 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/model/custom_user.dart';
@@ -16,6 +15,7 @@ import 'package:go_together/utils/toasty.dart';
 import 'package:go_together/widget/custom_button.dart';
 import 'package:go_together/widget/custom_medium_divider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../bloc/map_support/map_support_bloc.dart';
 import '../../model/notification.dart';
@@ -102,9 +102,14 @@ class TripDetailPage extends StatelessWidget {
               _buildMap(),
               const SizedBox(height: 26),
               const CustomMediumDivider(),
-              Image.asset(
-                'assets/images/qr_test.png',
-                height: 200,
+              QrImage(
+                data: jsonEncode({
+                  "idTrip": trip.idTrip,
+                  "title": trip.title,
+                  "idCreator": trip.idCreator
+                }),
+                version: QrVersions.auto,
+                size: 200.0,
               ),
               const SizedBox(
                 height: 100,
@@ -142,8 +147,7 @@ class TripDetailPage extends StatelessWidget {
                     title: trip.title,
                     type: 'tripRequest',
                     status: 'pending',
-                    createAt: Timestamp.fromDate(DateTime.now())
-                    );
+                    createAt: Timestamp.fromDate(DateTime.now()));
 
                 final count = await FirebaseFirestore.instance
                     .collection('Notification')

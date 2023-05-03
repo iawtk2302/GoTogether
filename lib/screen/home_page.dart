@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/router/routes.dart';
+import 'package:go_together/screen/qr_scanner_page.dart';
 import 'package:go_together/widget/item_trip.dart';
 
 import '../bloc/home/home_bloc.dart';
@@ -79,20 +80,28 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           const SizedBox(
-                            width: 16,
+                            width: 5,
                           ),
                           BlocBuilder<UserBloc, UserState>(
                             builder: (context, state) {
                               if (state is UserLoading) {
-                                return CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      'https://firebasestorage.googleapis.com/v0/b/sneakerapp-f4de5.appspot.com/o/RWN1mUAm9FXdowlsgKbZqU25zt23.jpg?alt=media&token=0df163e4-3a98-4371-90a7-52ec17c26320'),
-                                );
+                                return ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const QRViewExample(),
+            ));
+          },
+          child: const Text('qrView'),
+        );
                               } else if (state is UserExist) {
-                                return CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      state.user.image.toString()),
-                                );
+                                return IconButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const QRViewExample(),
+            ));
+          },
+          icon: const Icon(Icons.qr_code_scanner,color: Colors.white,),
+        );
                               } else {
                                 return const SizedBox();
                               }
