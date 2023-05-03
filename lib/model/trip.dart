@@ -147,8 +147,8 @@ class Member extends Equatable {
   factory Member.fromJson(Map<String, dynamic> json) => Member(
         idUser: json["idUser"] ?? "",
         image: json["image"] ?? "",
-        lat: json["lat"] ?? "",
-        lng: json["lng"] ?? "",
+        lat: json["lat"] != "" ? json["lat"] : "10.945",
+        lng:json["lng"] != "" ? json["lng"] : "106.6345",
       );
 
   Map<String, dynamic> toJson() => {
