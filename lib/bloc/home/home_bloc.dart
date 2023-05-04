@@ -18,7 +18,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           .then((value) {
             List<Trip> trips = [];
             trips = value.docs.map((e) => Trip.fromJson(e.data())).toList();
-
             emit(HomeLoaded(trips: trips));
       });
     });
