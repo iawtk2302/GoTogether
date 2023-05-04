@@ -106,7 +106,8 @@ class TripDetailPage extends StatelessWidget {
                 data: jsonEncode({
                   "idTrip": trip.idTrip,
                   "title": trip.title,
-                  "idCreator": trip.idCreator
+                  "idCreator": trip.idCreator,
+                  "image":trip.image
                 }),
                 version: QrVersions.auto,
                 size: 200.0,

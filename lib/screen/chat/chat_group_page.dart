@@ -45,6 +45,7 @@ class _ChannelListPageState extends State<ChannelListPage>{
       [FirebaseUtil.currentUser!.uid],
     ),
     Filter.equal('type', 'group'),
+    Filter.greaterOrEqual('member_count', 2),
   ]);
    late final StreamChannelListController _listController = StreamChannelListController(
     client: StreamChat.of(context).client,

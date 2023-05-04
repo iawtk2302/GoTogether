@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_together/screen/profile/update_profile_page.dart';
 import 'package:go_together/widget/loading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -130,19 +131,19 @@ class ProfilePage1 extends StatelessWidget {
                 label: 'Sửa thông tin cá nhân',
                 rightIcon: Icons.chevron_right,
                 onPress: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => UpdateProfile(user: user),
-                  //     ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateProfilePage(customUser: user,),
+                      ));
 
-                  showDialog(
-                    barrierColor : Colors.black.withOpacity(0.7),
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        elevation: 0,
-                        backgroundColor: Colors.transparent,
-                        content: MyLoading()));
+                  // showDialog(
+                  //   barrierColor : Colors.black.withOpacity(0.7),
+                  //     context: context,
+                  //     builder: (context) => AlertDialog(
+                  //       elevation: 0,
+                  //       backgroundColor: Colors.transparent,
+                  //       content: MyLoading()));
                 },
               );
             },

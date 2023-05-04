@@ -45,7 +45,7 @@ class ItemNotification extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 TextSpan(
-                  text: ' sent a request to join the trip ',
+                  text: ' đã gửi 1 yêu cầu tham gia chuyến đi ',
                   style: TextStyle(fontSize: 14),
                 ),
                 TextSpan(
@@ -98,7 +98,7 @@ class ItemNotification extends StatelessWidget {
                       color: CustomColor.blue,
                       borderRadius: BorderRadius.circular(5)
                     ),
-                    child: Center(child: Text("Accept", style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),)),
+                    child: Center(child: Text("Chấp nhận", style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),)),
                   ),
                 ),
               ),
@@ -117,15 +117,15 @@ class ItemNotification extends StatelessWidget {
                       color: CustomColor.grey,
                       borderRadius: BorderRadius.circular(5)
                     ),
-                    child: Center(child: Text("Reject",style: TextStyle(fontWeight: FontWeight.w500),)),
+                    child: Center(child: Text("Từ chối",style: TextStyle(fontWeight: FontWeight.w500),)),
                   ),
                 ),
               )
             ],):notification.status=="accepted"?Align(
               alignment: Alignment.centerLeft,
-              child: Text("Accepted the request",style: TextStyle(color: Colors.green),)):Align(
+              child: Text("Đã chấp nhận",style: TextStyle(color: Colors.green),)):Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Rejected the request",style: TextStyle(color: Colors.red)))
+                child: Text("Đã từ chối",style: TextStyle(color: Colors.red)))
           ],))
       ]),),
     );
