@@ -255,7 +255,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
                           trip: widget.trip,
                         )));
           },
-          text: 'Start',
+          text: 'Bắt đầu',
           color: Colors.green[500],
           isDisable: status == 'start' ||
               status == 'completed' ||
