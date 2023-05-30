@@ -22,16 +22,6 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: CustomColor.bg,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   leading: InkWell(
-      //     onTap: () {
-      //       Navigator.pushReplacementNamed(context, Routes.login);
-      //     },
-      //     child: const Icon(Icons.chevron_left, color: Colors.black, size: 42),
-      //   ),
-      // ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

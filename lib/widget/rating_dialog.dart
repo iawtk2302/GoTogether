@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emoji_feedback/flutter_emoji_feedback.dart';
+// import 'package:flutter_emoji_feedback/flutter_emoji_feedback.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/widget/custom_button.dart';
 
@@ -27,18 +27,18 @@ class _RatingDialogState extends State<RatingDialog> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
           Text("Give trip feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: EmojiFeedback(
-              animDuration: const Duration(milliseconds: 300),
-              curve: Curves.bounceIn,
-              inactiveElementScale: .7,
-              showLabel: false,
-              onChanged: (value) {
-                print(value);
-              },
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(12.0),
+          //   child: EmojiFeedback(
+          //     animDuration: const Duration(milliseconds: 300),
+          //     curve: Curves.bounceIn,
+          //     inactiveElementScale: .7,
+          //     showLabel: false,
+          //     onChanged: (value) {
+          //       print(value);
+          //     },
+          //   ),
+          // ),
         TextField(
         decoration: InputDecoration(
         border: OutlineInputBorder(

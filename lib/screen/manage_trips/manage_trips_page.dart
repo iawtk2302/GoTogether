@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/manage_trip/manage_trip_bloc.dart';
+import 'package:go_together/screen/manage_trips/completed_trip_tab.dart';
 import 'package:go_together/screen/manage_trips/own_trip_tab.dart';
 import 'package:go_together/screen/manage_trips/trip_active_tab.dart';
 
@@ -27,7 +28,7 @@ class _ManageTripsPageState extends State<ManageTripsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -55,6 +56,9 @@ class _ManageTripsPageState extends State<ManageTripsPage> {
                 text: 'Của bạn',
               ),
               Tab(
+                text: 'Hoàn thành',
+              ),
+              Tab(
                 text: 'Đã hủy',
               ),
             ],
@@ -69,6 +73,7 @@ class _ManageTripsPageState extends State<ManageTripsPage> {
             // OrderCanceled(),
             TripActiveTab(),
             TripOwnTab(),
+            CompletedTripTab(),
             TripCancelTab(),
           ],
         ),

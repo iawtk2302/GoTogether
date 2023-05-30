@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/bloc/user/user_bloc.dart';
@@ -12,7 +13,7 @@ import '../chat/chat_page.dart';
 import '../favorite/favorite_page.dart';
 import '../profile/profile_page.dart';
 
-
+import 'package:http/http.dart' as http;
 
 
 class CheckInfoPage extends StatefulWidget {
@@ -139,7 +140,29 @@ class _MainPageContentState extends State<MainPageContent>
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
             children: [HomePage(), ChatPage(), FavoritePage(), ProfilePage1()],
+            // children: [TestPage(), ChatPage(), FavoritePage(), ProfilePage1()],
           )),
+    );
+  }
+}
+
+class TestPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: ElevatedButton(child: Text("yesy"),onPressed: ()async{
+        final dio = Dio();
+        // final url = Uri.parse("https://gotogether-recommendation.onrender.com/recommend_trips");
+        final body={
+    "idTrip": "414DB2XBfXUEvFv8Mo8u",
+    "title": "Khu du lịch Hòn Bà",
+    "description": "Hòn Bà là một hòn đảo nổi tiếng gần bờ biển Vũng Tàu. Du khách có thể đi thuyền từ cảng Cầu Đá, thăm quan ngôi chùa cổ kính Hòn Bà, tắm biển, câu cá và thưởng thức các món ăn đặc sản của vùng biển.",
+    "activities": "Cắm trại|Chụp ảnh|Quay phim|Nấu ăn"
+};
+        final response = await dio.post("https://gotogether-recommendation.onrender.com/recommend_trips",data: body);
+          
+          print(response.data['recommended_trips'][0]);
+      },),),
     );
   }
 }

@@ -123,15 +123,15 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           _buildMap(),
           const SizedBox(height: 26),
           const CustomMediumDivider(),
-          QrImage(
-                data: jsonEncode({
-                  "idTrip": widget.trip.idTrip,
-                  "title": widget.trip.title,
-                  "idCreator": widget.trip.idCreator
-                }),
-                version: QrVersions.auto,
-                size: 200.0,
-              ),
+          // QrImage(
+          //       data: jsonEncode({
+          //         "idTrip": widget.trip.idTrip,
+          //         "title": widget.trip.title,
+          //         "idCreator": widget.trip.idCreator
+          //       }),
+          //       version: QrVersions.auto,
+          //       size: 200.0,
+          //     ),
           // const SizedBox(
           //   height: 100,
           // ),
@@ -255,7 +255,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
                           trip: widget.trip,
                         )));
           },
-          text: 'Start',
+          text: 'Bắt đầu',
           color: Colors.green[500],
           isDisable: status == 'start' ||
               status == 'completed' ||

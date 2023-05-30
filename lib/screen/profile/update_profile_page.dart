@@ -112,38 +112,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     },
                   ),
                   SizedBox(height: 15,),
-                  // InfoInput(
-                  //   hintText: "First Name",
-                  //   controller: _firstNameController,
-                  //   readOnly: false,
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return "Required";
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
-                  // InfoInput(
-                  //   hintText: "Last Name",
-                  //   controller: _lastNameController,
-                  //   readOnly: false,
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return "Required";
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
-                  
-                  // InfoInput(
-                  //   hintText: dateOfbirth,
-                  //   suffixIcon: IconButton(
-                  //     icon: const Icon(Icons.calendar_month),
-                  //     onPressed: _getDateOfBirth,
-                  //   ),
-                  //   enabled: true,
-                  //   readOnly: true,
-                  // ),
                   CustomTextFormField(
                     hint: "Email",
                     title: "Email",
@@ -190,43 +158,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     },
                   ),
                   SizedBox(height: 15,),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 10),
-                  //   child: Container(
-                  //       width: size.width * 0.85,
-                  //       decoration: BoxDecoration(
-                  //           color: const Color(0xFFFAFAFA),
-                  //           borderRadius: BorderRadius.circular(10)),
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.symmetric(vertical: 2),
-                  //         child: DropdownButtonHideUnderline(
-                  //           child: DropdownButton<String>(
-                  //             iconSize: 32,
-                  //             icon: const Padding(
-                  //               padding: EdgeInsets.only(right: 8),
-                  //               child: Icon(Icons.keyboard_arrow_down),
-                  //             ),
-                  //             isExpanded: true,
-                  //             onChanged: (value) {
-                  //               setState(() {
-                  //                 dropdownValue = value!;
-                  //               });
-                  //             },
-                  //             value: dropdownValue,
-                  //             items: gender
-                  //                 .map<DropdownMenuItem<String>>((String value) {
-                  //               return DropdownMenuItem<String>(
-                  //                 value: value,
-                  //                 child: Padding(
-                  //                   padding: const EdgeInsets.only(left: 20),
-                  //                   child: Text(value),
-                  //                 ),
-                  //               );
-                  //             }).toList(),
-                  //           ),
-                  //         ),
-                  //       )),
-                  // ),
                   CustomTextFormField(
                     title: "Ngày sinh",
                     hint: dateOfbirth,

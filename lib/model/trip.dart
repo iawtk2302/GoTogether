@@ -2,27 +2,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Trip extends Equatable {
-  Trip({
-    required this.idTrip,
-    required this.idCreator,
-    required this.destination,
-    required this.title,
-    required this.dateStart,
-    required this.dateEnd,
-    required this.quantity,
-    required this.description,
-    required this.status,
-    required this.image,
-    required this.members,
-    required this.activities,
-    required this.membersId,
-  });
+  Trip(
+      {required this.idTrip,
+      required this.idCreator,
+      required this.destination,
+      required this.title,
+      required this.dateStart,
+      required this.dateEnd,
+      required this.quantity,
+      required this.description,
+      required this.status,
+      required this.image,
+      required this.members,
+      required this.activities,
+      required this.membersId,
+      required this.dateCompleted});
   final String idTrip;
   final String idCreator;
   final String destination;
   final String title;
   final Timestamp dateStart;
   final Timestamp dateEnd;
+  final Timestamp dateCompleted;
   final int quantity;
   final String description;
   final String status;
@@ -45,21 +46,24 @@ class Trip extends Equatable {
     List<Member>? members,
     List<String>? activities,
     List<String>? membersId,
+    Timestamp? dateCompleted,
   }) =>
       Trip(
-          idTrip: idTrip ?? this.idTrip,
-          idCreator: idCreator ?? this.idCreator,
-          destination: destination ?? this.destination,
-          title: title ?? this.title,
-          dateStart: dateStart ?? this.dateStart,
-          dateEnd: dateEnd ?? this.dateEnd,
-          quantity: quantity ?? this.quantity,
-          description: description ?? this.description,
-          status: status ?? this.status,
-          image: image ?? this.image,
-          members: members ?? this.members,
-          activities: activities ?? this.activities,
-          membersId: membersId ?? this.membersId);
+        idTrip: idTrip ?? this.idTrip,
+        idCreator: idCreator ?? this.idCreator,
+        destination: destination ?? this.destination,
+        title: title ?? this.title,
+        dateStart: dateStart ?? this.dateStart,
+        dateEnd: dateEnd ?? this.dateEnd,
+        quantity: quantity ?? this.quantity,
+        description: description ?? this.description,
+        status: status ?? this.status,
+        image: image ?? this.image,
+        members: members ?? this.members,
+        activities: activities ?? this.activities,
+        membersId: membersId ?? this.membersId,
+        dateCompleted: dateCompleted ?? this.dateCompleted,
+      );
 
   factory Trip.fromJson(Map<String, dynamic> json) => Trip(
         idTrip: json["idTrip"] ?? "",
@@ -72,6 +76,7 @@ class Trip extends Equatable {
         description: json["description"],
         status: json["status"],
         image: json["image"],
+        dateCompleted: json['dateCompleted'] ?? Timestamp.now(),
         members: json["members"] == null
             ? []
             : List<Member>.from(json["members"].map((x) => Member.fromJson(x))),
@@ -97,6 +102,7 @@ class Trip extends Equatable {
         "membersId": List<dynamic>.from(membersId.map((x) => x)),
         "idCreator": idCreator,
         "idTrip": idTrip,
+        'dateCompleted': dateCompleted,
       };
 
   @override
@@ -114,7 +120,8 @@ class Trip extends Equatable {
         membersId,
         idCreator,
         idTrip,
-        membersId
+        membersId,
+        dateCompleted
       ];
 }
 
@@ -148,7 +155,7 @@ class Member extends Equatable {
         idUser: json["idUser"] ?? "",
         image: json["image"] ?? "",
         lat: json["lat"] != "" ? json["lat"] : "10.945",
-        lng:json["lng"] != "" ? json["lng"] : "106.6345",
+        lng: json["lng"] != "" ? json["lng"] : "106.6345",
       );
 
   Map<String, dynamic> toJson() => {
