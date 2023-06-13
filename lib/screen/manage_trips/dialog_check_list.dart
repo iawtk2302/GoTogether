@@ -1,11 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_together/model/trip.dart';
+import 'package:logger/logger.dart';
+import 'package:collection/collection.dart';
 
-class DialogCheckList extends StatelessWidget {
+class DialogCheckList extends StatefulWidget {
   const DialogCheckList({super.key, required this.trip});
 
   final Trip trip;
+
+  @override
+  State<DialogCheckList> createState() => _DialogCheckListState();
+}
+
+class _DialogCheckListState extends State<DialogCheckList> {
+  List<bool> listJoin = [];
+
+  @override
+  void initState() {
+    for (var e in widget.trip.members) {
+      listJoin.add(false);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +35,12 @@ class DialogCheckList extends StatelessWidget {
         width: MediaQuery.of(context).size.height * 0.7,
         child: ListView.separated(
           shrinkWrap: true,
-          itemCount: trip.members.length,
-          itemBuilder: (ctx, index) =>
-              ItemCheckList(member: trip.members[index]),
+          itemCount: widget.trip.members.length,
+          itemBuilder: (ctx, index) => ItemCheckList(
+              member: widget.trip.members[index],
+              onPress: () {
+                listJoin[index] = !listJoin[index];
+              }),
           separatorBuilder: (context, index) => Divider(
             color: Colors.grey[500],
           ),
@@ -30,10 +50,23 @@ class DialogCheckList extends StatelessWidget {
         TextButton(
             onPressed: () async {
               await FirebaseFirestore.instance
-                  .collection('Trip')
-                  .doc(trip.idTrip)
-                  .update({'status': 'completed'});
-              
+                  .collection('TripMembersJoin')
+                  .doc(widget.trip.idTrip)
+                  .set({
+                "idTrip": widget.trip.idTrip,
+                'listMember': listJoin
+                    .mapIndexed((index, element) => listJoin[index]
+                        ? widget.trip.members[index].toJson()
+                        : null)
+                    .toList(),
+                'idCreator': widget.trip.idCreator,
+              }).then((value) async {
+                await FirebaseFirestore.instance
+                    .collection('Trip')
+                    .doc(widget.trip.idTrip)
+                    .update({'status': 'completed'});
+              });
+              Logger().v(listJoin);
               Navigator.pop(context, true);
             },
             child: Text('Ok'))
@@ -43,9 +76,10 @@ class DialogCheckList extends StatelessWidget {
 }
 
 class ItemCheckList extends StatefulWidget {
-  const ItemCheckList({super.key, required this.member});
+  const ItemCheckList({super.key, required this.member, required this.onPress});
 
   final Member member;
+  final VoidCallback onPress;
 
   @override
   State<ItemCheckList> createState() => _ItemCheckListState();
@@ -75,6 +109,7 @@ class _ItemCheckListState extends State<ItemCheckList> {
           Checkbox(
               value: selected,
               onChanged: (value) {
+                widget.onPress();
                 setState(() {
                   selected = value!;
                 });

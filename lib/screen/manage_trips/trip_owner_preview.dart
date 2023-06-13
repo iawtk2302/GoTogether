@@ -19,6 +19,7 @@ import 'package:go_together/widget/custom_button.dart';
 import 'package:go_together/widget/custom_medium_divider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+// import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../bloc/map_support/map_support_bloc.dart';
 import '../../model/notification.dart';
@@ -124,7 +125,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           _buildMap(),
           const SizedBox(height: 26),
           const CustomMediumDivider(),
-          QrImage(
+          QrImageView(
             data: jsonEncode({
               "idTrip": widget.trip.idTrip,
               "title": widget.trip.title,

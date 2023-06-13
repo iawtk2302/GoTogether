@@ -102,7 +102,7 @@ class TripDetailPage extends StatelessWidget {
               _buildMap(),
               const SizedBox(height: 26),
               const CustomMediumDivider(),
-              QrImage(
+              QrImageView(
                 data: jsonEncode({
                   "idTrip": trip.idTrip,
                   "title": trip.title,
