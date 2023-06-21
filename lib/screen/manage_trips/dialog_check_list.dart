@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_together/model/custom_user.dart';
 import 'package:go_together/model/trip.dart';
 import 'package:logger/logger.dart';
 import 'package:collection/collection.dart';
@@ -49,24 +50,50 @@ class _DialogCheckListState extends State<DialogCheckList> {
       actions: [
         TextButton(
             onPressed: () async {
+              for (int i = 0; i < listJoin.length; i++) {
+                if (listJoin[i]) {
+                  final data = await FirebaseFirestore.instance
+                      .collection('User')
+                      .doc(widget.trip.members[i].idUser)
+                      .get();
+                  final user = CustomUser.fromJson(data.data()!);
+                  Logger().v(user);
+                  await FirebaseFirestore.instance
+                      .collection('TripMembersJoin')
+                      .doc(user.idUser)
+                      .set({
+                    "idTrip": widget.trip.idTrip,
+                    'idCreator': widget.trip.idCreator,
+                    'idUser': user.idUser,
+                    'nameTrip': widget.trip.title,
+                    'userName': user.fullName,
+                    'phone': user.phone,
+                    'status': false,
+                  });
+                }
+              }
               await FirebaseFirestore.instance
-                  .collection('TripMembersJoin')
+                  .collection('Trip')
                   .doc(widget.trip.idTrip)
-                  .set({
-                "idTrip": widget.trip.idTrip,
-                'listMember': listJoin
-                    .mapIndexed((index, element) => listJoin[index]
-                        ? widget.trip.members[index].toJson()
-                        : null)
-                    .toList(),
-                'idCreator': widget.trip.idCreator,
-              }).then((value) async {
-                await FirebaseFirestore.instance
-                    .collection('Trip')
-                    .doc(widget.trip.idTrip)
-                    .update({'status': 'completed'});
-              });
-              Logger().v(listJoin);
+                  .update({'status': 'completed'});
+              // await FirebaseFirestore.instance
+              //     .collection('TripMembersJoin')
+              //     .doc(widget.trip.idTrip)
+              //     .set({
+              //   "idTrip": widget.trip.idTrip,
+              //   'listMember': listJoin
+              //       .mapIndexed((index, element) => listJoin[index]
+              //           ? widget.trip.members[index].toJson()
+              //           : null)
+              //       .toList(),
+              //   'idCreator': widget.trip.idCreator,
+              // }).then((value) async {
+              //   await FirebaseFirestore.instance
+              //       .collection('Trip')
+              //       .doc(widget.trip.idTrip)
+              //       .update({'status': 'completed'});
+              // });
+              // Logger().v(listJoin);
               Navigator.pop(context, true);
             },
             child: Text('Ok'))
