@@ -57,22 +57,36 @@ class _DialogCheckListState extends State<DialogCheckList> {
                     if (i == j) {
                       continue;
                     }
-                    final data = await FirebaseFirestore.instance
+                    final data1 = await FirebaseFirestore.instance
+                        .collection('User')
+                        .doc(widget.trip.members[i].idUser)
+                        .get();
+                    final data2 = await FirebaseFirestore.instance
                         .collection('User')
                         .doc(widget.trip.members[j].idUser)
                         .get();
-                    final user = CustomUser.fromJson(data.data()!);
-                    Logger().v(user);
+                    final user1 = CustomUser.fromJson(data1.data()!);
+                    final user2 = CustomUser.fromJson(data2.data()!);
+                    Logger().v(user1);
                     await FirebaseFirestore.instance
                         .collection('TripMembersJoin')
                         .add({
                       "idTrip": widget.trip.idTrip,
                       'idCreator': widget.trip.idCreator,
-                      'idUser': user.idUser,
+                      'idUser1': user1.idUser,
+                      'idUser2': user2.idUser,
                       'nameTrip': widget.trip.title,
-                      'userName': user.fullName,
-                      'phone': user.phone,
+                      'userName': user2.fullName,
+                      'phone': user2.phone,
                       'status': false,
+                      'image': user2.image
+                    }).then((value) async {
+                      await FirebaseFirestore.instance
+                          .collection('TripMembersJoin')
+                          .doc(value.id)
+                          .update({
+                        'idTripMembersJoin': value.id,
+                      });
                     });
                   }
                 }
