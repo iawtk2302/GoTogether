@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/common/custom_color.dart';
 import 'package:go_together/model/custom_user.dart';
 import 'package:go_together/model/trip.dart';
+import 'package:go_together/screen/manage_trips/dialog_check_list.dart';
 import 'package:go_together/utils/date_time_utils.dart';
 import 'package:go_together/utils/firebase_utils.dart';
 import 'package:go_together/utils/toasty.dart';
@@ -125,6 +126,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           const SizedBox(height: 26),
           const CustomMediumDivider(),
           QrImageView(
+<<<<<<< HEAD
                 data: jsonEncode({
                   "idTrip": widget.trip.idTrip,
                   "title": widget.trip.title,
@@ -136,6 +138,19 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           const SizedBox(
             height: 100,
           ),
+=======
+            data: jsonEncode({
+              "idTrip": widget.trip.idTrip,
+              "title": widget.trip.title,
+              "idCreator": widget.trip.idCreator
+            }),
+            version: QrVersions.auto,
+            size: 200.0,
+          ),
+          // const SizedBox(
+          //   height: 100,
+          // ),
+>>>>>>> f85ebf817c65d31a427bc1434a2f6937b45f03f2
           const SizedBox(height: 26),
           const CustomMediumDivider(),
           Align(
@@ -179,13 +194,17 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
                   width: MediaQuery.of(context).size.width / 2 - 20,
                   child: CustomButton(
                     onPressed: () async {
-                      await FirebaseFirestore.instance
-                          .collection('Trip')
-                          .doc(widget.trip.idTrip)
-                          .update({'status': 'completed'});
-                      setState(() {
-                        status = 'completed';
-                      });
+                      final success = await showDialog(
+                          context: context,
+                          builder: (context) => DialogCheckList(
+                                trip: widget.trip,
+                              ));
+
+                      if (success) {
+                        setState(() {
+                          status = 'completed';
+                        });
+                      }
                     },
                     text: 'Hoàn thành',
                     isDisable: status == 'completed' || status == 'canceled',
@@ -195,7 +214,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
             ),
           ),
           if (status != 'start') _buildButtonStart(),
-          if(status == 'start') _buildButtonGo(),
+          if (status == 'start') _buildButtonGo(),
           _buildButtonCancel()
         ]),
       ),
@@ -289,7 +308,7 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
                           trip: widget.trip,
                         )));
           },
-          text: 'Go',
+          text: 'Đi',
           color: Colors.green[500],
           // isDisable: status == 'start' ||
           //     status == 'completed' ||
@@ -458,8 +477,8 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
                 Text(
                   widget.trip.title,
                   maxLines: 2,
-                  style:
-                      const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 8),
                 Text(

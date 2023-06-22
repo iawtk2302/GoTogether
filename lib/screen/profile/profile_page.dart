@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_together/screen/profile/update_profile_page.dart';
+import 'package:go_together/screen/user_review/user_review.dart';
 import 'package:go_together/widget/loading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -149,16 +150,16 @@ class ProfilePage1 extends StatelessWidget {
             },
           ),
           ItemProfile(
-            leftIcon: Icons.mode_of_travel,
-            label: 'Địa chỉ',
-            rightIcon: Icons.chevron_right,
+            leftIcon: Icons.rate_review_outlined,
+            label: 'Đánh giá người dùng',
+            rightIcon: Icons.reviews,
             onPress: () {
               // Navigator.pushNamed(context, Routes.chooseAddress);
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: ((context) =>
-              //             const ChooseAddressProfilePage())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) =>
+                          const UserReviewPage())));
             },
           ),
           ItemProfile(
