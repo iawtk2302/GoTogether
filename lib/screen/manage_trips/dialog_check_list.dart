@@ -149,7 +149,7 @@ class _ItemCheckListState extends State<ItemCheckList> {
               SizedBox(
                 width: 22,
               ),
-              Text('Day la ten')
+              Text(widget.member.nameUser)
             ]),
           ),
           Checkbox(

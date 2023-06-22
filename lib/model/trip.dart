@@ -131,24 +131,28 @@ class Member extends Equatable {
     required this.image,
     required this.lat,
     required this.lng,
+    required this.nameUser,
   });
 
   final String idUser;
   final String image;
   final String lat;
   final String lng;
+  final String nameUser;
 
   Member copyWith({
     String? idUser,
     String? image,
     String? lat,
     String? lng,
+    String? nameUser
   }) =>
       Member(
         idUser: idUser ?? this.idUser,
         image: image ?? this.image,
         lat: lat ?? this.lat,
         lng: lng ?? this.lng,
+        nameUser: nameUser ?? this.nameUser
       );
 
   factory Member.fromJson(Map<String, dynamic> json) => Member(
@@ -156,6 +160,7 @@ class Member extends Equatable {
         image: json["image"] ?? "",
         lat: json["lat"] != "" ? json["lat"] : "10.945",
         lng: json["lng"] != "" ? json["lng"] : "106.6345",
+        nameUser: json['nameUser'] == null ? "Nguyen Ba Khanh": json['nameUser']
       );
 
   Map<String, dynamic> toJson() => {
