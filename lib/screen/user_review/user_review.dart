@@ -29,7 +29,7 @@ class _UserReviewPageState extends State<UserReviewPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(

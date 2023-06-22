@@ -25,13 +25,13 @@ class _ItemInfoReviewState extends State<ItemInfoReview> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          CircleAvatar(backgroundImage: NetworkImage(FirebaseUtil.currentUser!.photoURL!),),
+          CircleAvatar(backgroundImage: NetworkImage(widget.reviewed.linkAva!),),
           SizedBox(width: 4,),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              Text(FirebaseUtil.currentUser!.displayName!),
+              Text(widget.reviewed.nameReviewer!),
               SizedBox(height: 6,),
               Text(stars[widget.reviewed.rate!]!),
               SizedBox(height: 6,),
