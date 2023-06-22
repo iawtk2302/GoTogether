@@ -66,10 +66,10 @@ class _RatingDialogState extends State<RatingDialog> {
           child: ElevatedButton(onPressed: ()async{
             await firestore.add({
               "content": controller.text.trim(),
-              "idReviewer": FirebaseUtil.currentUser!.uid,
+              "idReviewer": widget.review.idUser1,
               "idUser": widget.review.idUser2,
-              "linkAva": FirebaseUtil.currentUser!.photoURL,
-              "nameReviewer": FirebaseUtil.currentUser!.displayName,
+              "linkAva": widget.review.image,
+              "nameReviewer": widget.review.userName,
               "phoneReviewer": FirebaseUtil.currentUser!.phoneNumber,
               "rate": rate,
               "timeCreated": DateTime.now()
