@@ -1,16 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_emoji_feedback/flutter_emoji_feedback.dart';
 // import 'package:flutter_emoji_feedback/flutter_emoji_feedback.dart';
 import 'package:go_together/common/custom_color.dart';
+import 'package:go_together/model/review.dart';
+import 'package:go_together/utils/firebase_utils.dart';
 import 'package:go_together/widget/custom_button.dart';
 
 class RatingDialog extends StatefulWidget {
-  const RatingDialog({super.key});
-
+  const RatingDialog({super.key, required this.review});
+  final Review review;
   @override
   State<RatingDialog> createState() => _RatingDialogState();
 }
 
 class _RatingDialogState extends State<RatingDialog> {
+  final firestore = FirebaseFirestore.instance.collection("Review");
+  final review = FirebaseFirestore.instance.collection("TripMembersJoin");
+  TextEditingController controller=TextEditingController();
+  int rate=0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,20 +34,21 @@ class _RatingDialogState extends State<RatingDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          Text("Give trip feedback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
-          // Padding(
-          //   padding: const EdgeInsets.all(12.0),
-          //   child: EmojiFeedback(
-          //     animDuration: const Duration(milliseconds: 300),
-          //     curve: Curves.bounceIn,
-          //     inactiveElementScale: .7,
-          //     showLabel: false,
-          //     onChanged: (value) {
-          //       print(value);
-          //     },
-          //   ),
-          // ),
+          Text("Đánh giá người dùng", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: EmojiFeedback(
+              animDuration: const Duration(milliseconds: 300),
+              curve: Curves.bounceIn,
+              inactiveElementScale: .7,
+              showLabel: false,
+              onChanged: (value) {
+                rate=value;
+              },
+            ),
+          ),
         TextField(
+          controller: controller,
         decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
@@ -47,14 +56,27 @@ class _RatingDialogState extends State<RatingDialog> {
         ),
         filled: true,
         hintStyle: TextStyle(color: CustomColor.grey),
-        hintText: "Tell us more...",
+        hintText: "Nhập đánh giá...",
         fillColor: CustomColor.blue1),
         maxLines: 7,
         ),
         SizedBox(height: 10,),
         Align(
           alignment: Alignment.centerRight,
-          child: ElevatedButton(onPressed: (){}, child: Text("Submit")))
+          child: ElevatedButton(onPressed: ()async{
+            await firestore.add({
+              "content": controller.text.trim(),
+              "idReviewer": FirebaseUtil.currentUser!.uid,
+              "idUser": widget.review.idUser2,
+              "linkAva": FirebaseUtil.currentUser!.photoURL,
+              "nameReviewer": FirebaseUtil.currentUser!.displayName,
+              "phoneReviewer": FirebaseUtil.currentUser!.phoneNumber,
+              "rate": rate,
+              "timeCreated": DateTime.now()
+            }).then((value) => {firestore.doc(value.id).update({"idReview":value.id})});
+            await review.doc(widget.review.idTripMembersJoin).update({"status":true});
+            Navigator.pop(context);
+          }, child: Text("Nộp")))
         ]),
       ),
     );

@@ -22,6 +22,11 @@ extension ExtDateTime on DateTime {
     return result;
   }
 
+  String toReviewedFormat() {
+    String result = DateFormat("dd/MM/yyyy hh:mm").format(this);
+    return result;
+  }
+
   String toHourMatchFormat() {
     String result = DateFormat()
         .add_jm()

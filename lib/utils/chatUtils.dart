@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as Auth;
 class ChatUtil{
   static final user=Auth.FirebaseAuth.instance.currentUser!;
   static final client = StreamChatClient(
-    'd5k87ckf34wh',
+    '3jbywzpeb3se',
     logLevel: Level.INFO,
   );
   static final channel = client.channel('messaging', id: user.uid);

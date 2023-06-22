@@ -85,6 +85,7 @@ class ItemNotification extends StatelessWidget {
                     await FirebaseUtil.trips.doc(notification.idTrip).update({
                         "members":[...trip.members.map((e) => e.toJson()).toList(),{
                           "idUser":notification.idSender,
+                          "nameUser":notification.fullName,
                           "image":notification.imgAva,
                           "lat":"",
                           "lng":""

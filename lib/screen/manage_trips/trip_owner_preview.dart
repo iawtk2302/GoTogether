@@ -126,7 +126,6 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           const SizedBox(height: 26),
           const CustomMediumDivider(),
           QrImageView(
-<<<<<<< HEAD
                 data: jsonEncode({
                   "idTrip": widget.trip.idTrip,
                   "title": widget.trip.title,
@@ -138,19 +137,6 @@ class _TripOwnerPreviewState extends State<TripOwnerPreview> {
           const SizedBox(
             height: 100,
           ),
-=======
-            data: jsonEncode({
-              "idTrip": widget.trip.idTrip,
-              "title": widget.trip.title,
-              "idCreator": widget.trip.idCreator
-            }),
-            version: QrVersions.auto,
-            size: 200.0,
-          ),
-          // const SizedBox(
-          //   height: 100,
-          // ),
->>>>>>> f85ebf817c65d31a427bc1434a2f6937b45f03f2
           const SizedBox(height: 26),
           const CustomMediumDivider(),
           Align(

@@ -7,6 +7,8 @@ import 'package:go_together/bloc/manage_trip/manage_trip_bloc.dart';
 import 'package:go_together/screen/manage_trips/completed_trip_tab.dart';
 import 'package:go_together/screen/manage_trips/own_trip_tab.dart';
 import 'package:go_together/screen/manage_trips/trip_active_tab.dart';
+import 'package:go_together/screen/user_review/user_review_page.dart';
+import 'package:go_together/screen/user_review/user_reviewed_page.dart';
 
 
 class UserReviewPage extends StatefulWidget {
@@ -50,13 +52,10 @@ class _UserReviewPageState extends State<UserReviewPage> {
             labelColor: Colors.black,
             labelStyle: TextStyle(fontSize: 16),
             tabs: [
-              Tab(text: 'Hoạt động'),
+              Tab(text: 'Chưa đánh giá'),
               Tab(
-                text: 'Của bạn',
+                text: 'Đã đánh giá',
               ),
-              Tab(
-                text: 'Hoàn thành',
-              )
             ],
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -64,9 +63,8 @@ class _UserReviewPageState extends State<UserReviewPage> {
         ),
         body: const TabBarView(
           children: [
-            Text('data'),
-            Text('data'),
-            Text('data'),
+            UserReviewTabPage(),
+            UserReviewedTabPage(),
           ],
         ),
       ),
